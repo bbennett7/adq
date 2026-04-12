@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>question archive — askdumbquestions.ai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fira+Code:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --forest:   #1c2b24;
+  --forest-l: #4a6b57;
+  --sage:     #7ec49a;
+  --stone:    #fcfaf6;
+  --stone-2:  #f2efe8;
+  --rule:     #dddad2;
+  --rule-dk:  #253330;
+  --ink:      #1a1a1a;
+  --muted:    #6a7a70;
+  --vmuted:   #a8b4ac;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--stone); color:var(--ink); font-family:'DM Sans',sans-serif; font-weight:300; -webkit-font-smoothing:antialiased; }
+
+/* NAV */
+.nav-wrap { border-bottom:1px solid var(--rule); background:rgba(252,250,246,.96); position:sticky; top:0; z-index:100; backdrop-filter:blur(12px); }
+.nav { max-width:1200px; margin:0 auto; padding:0 40px; height:60px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; }
+.wordmark { font-family:'Bricolage Grotesque',sans-serif; font-size:18px; text-decoration:none; display:flex; align-items:baseline; }
+.wm-a { font-weight:300; color:var(--forest-l); }
+.wm-d { font-weight:700; color:var(--ink); letter-spacing:-.025em; }
+.wm-t { font-weight:300; color:var(--vmuted); }
+.nav-links { display:flex; justify-content:flex-end; gap:28px; list-style:none; }
+.nav-links a { font-family:'Bricolage Grotesque',sans-serif; font-size:13px; font-weight:400; color:var(--vmuted); text-decoration:none; transition:color .15s; }
+.nav-links a:hover,.nav-links a.active { color:var(--ink); }
+
+/* PAGE */
+.page { max-width:1200px; margin:0 auto; padding:0 40px; }
+
+/* HEADER */
+.page-hdr { padding:52px 0 40px; border-bottom:1px solid var(--rule); display:flex; align-items:baseline; justify-content:space-between; }
+.page-title { font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:clamp(28px,3vw,40px); letter-spacing:-.025em; color:var(--forest); }
+.page-count { font-family:'Fira Code',monospace; font-weight:500; font-size:12px; color:var(--vmuted); letter-spacing:.06em; }
+
+/* FILTER BAR */
+.filter-bar { padding:20px 0; border-bottom:1px solid var(--rule); display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.filter-label { font-family:'Fira Code',monospace; font-weight:500; font-size:10px; color:var(--vmuted); letter-spacing:.08em; margin-right:4px; }
+.filter-btn { font-family:'Fira Code',monospace; font-weight:500; font-size:11px; color:var(--forest-l); background:none; border:1px solid var(--rule); border-radius:20px; padding:5px 14px; cursor:pointer; transition:all .15s; letter-spacing:.04em; }
+.filter-btn:hover,.filter-btn.active { background:var(--forest); color:rgba(255,255,255,.8); border-color:var(--forest); }
+
+/* MONTH GROUP */
+.month-group { padding:40px 0 0; }
+.month-label { font-family:'Fira Code',monospace; font-weight:500; font-size:11px; color:var(--sage); letter-spacing:.1em; display:block; margin-bottom:16px; }
+
+/* QUESTION ROW — expanded with answer on click */
+.q-item { border-bottom:1px solid var(--rule); cursor:pointer; }
+.q-item:first-of-type { border-top:1px solid var(--rule); }
+
+.q-item-header { padding:16px 0; display:grid; grid-template-columns:56px 1fr auto; gap:14px; align-items:baseline; transition:opacity .15s; }
+.q-item:hover .q-item-header { opacity:.7; }
+.q-item.open .q-item-header { opacity:1; }
+.q-item-date { font-family:'Fira Code',monospace; font-weight:500; font-size:10px; color:#bbb; letter-spacing:.06em; }
+.q-item-text { font-family:'Newsreader',serif; font-style:italic; font-size:17px; line-height:1.5; color:#555; }
+.q-item.open .q-item-text { color:var(--forest); }
+.q-item-chevron { font-family:'Fira Code',monospace; font-weight:500; font-size:11px; color:var(--rule); transition:transform .2s, color .15s; }
+.q-item.open .q-item-chevron { transform:rotate(90deg); color:var(--sage); }
+
+.q-item-answer { display:none; padding:0 0 24px 70px; }
+.q-item.open .q-item-answer { display:block; }
+.q-answer-text { font-family:'DM Sans',sans-serif; font-weight:300; font-size:16px; line-height:1.72; color:var(--muted); margin-bottom:12px; }
+.q-answer-text strong { font-weight:500; color:var(--ink); }
+.q-answer-cav { font-family:'Caveat',cursive; font-weight:600; font-size:18px; color:var(--forest-l); display:block; margin-bottom:14px; }
+.q-answer-link { font-family:'Fira Code',monospace; font-weight:500; font-size:11px; color:var(--sage); text-decoration:none; letter-spacing:.04em; display:inline-flex; align-items:center; gap:6px; }
+
+/* FOOTER */
+footer { background:var(--forest); border-top:1px solid var(--rule-dk); padding:40px 0; margin-top:80px; }
+.footer-inner { max-width:1200px; margin:0 auto; padding:0 40px; display:flex; align-items:center; justify-content:space-between; }
+.footer-wm { font-family:'Bricolage Grotesque',sans-serif; font-size:22px; text-decoration:none; display:flex; align-items:baseline; margin-bottom:8px; }
+.fwm-a { font-weight:300; color:var(--forest-l); }
+.fwm-d { font-weight:700; color:rgba(255,255,255,.82); letter-spacing:-.025em; }
+.fwm-t { font-weight:300; color:var(--forest-l); }
+.footer-tag { font-family:'Fira Code',monospace; font-weight:500; font-size:12px; color:var(--forest-l); letter-spacing:.06em; }
+.footer-right a { font-family:'Bricolage Grotesque',sans-serif; font-size:14px; color:var(--forest-l); text-decoration:none; }
+.footer-right a:hover { color:var(--sage); }
+</style>
+</head>
+<body>
+
+<div class="nav-wrap">
+  <div class="nav">
+    <span></span>
+    <a href="/" class="wordmark"><span class="wm-a">ask</span><span class="wm-d">dumbquestions</span><span class="wm-t">.ai</span></a>
+    <ul class="nav-links">
+      <li><a href="/archive" class="active">question archive</a></li>
+      <li><a href="/notes">field notes</a></li>
+      <li><a href="/start">getting started</a></li>
+      <li><a href="/about">about</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="page-hdr">
+    <h1 class="page-title">question archive</h1>
+    <span class="page-count">007 questions</span>
+  </div>
+
+  <div class="filter-bar">
+    <span class="filter-label">topic</span>
+    <button class="filter-btn active">all</button>
+    <button class="filter-btn">agents</button>
+    <button class="filter-btn">models</button>
+    <button class="filter-btn">evaluation</button>
+    <button class="filter-btn">infrastructure</button>
+    <button class="filter-btn">hype</button>
+  </div>
+
+  <!-- april -->
+  <div class="month-group">
+    <span class="month-label">april 2026</span>
+
+    <div class="q-item open" onclick="toggle(this)">
+      <div class="q-item-header">
+        <span class="q-item-date">apr 7</span>
+        <p class="q-item-text">"When does an AI become an agent?"</p>
+        <span class="q-item-chevron">›</span>
+      </div>
+      <div class="q-item-answer">
+        <p class="q-answer-text">When it can <strong>take action on your behalf</strong> rather than just describing action with language. If it can only tell you what to do, it's a chatbot. If it can go do it, it's an agent.</p>
+        <span class="q-answer-cav">note: most things called "agentic" right now are still just describing.</span>
+        <a href="#" class="q-answer-link">further reading →</a>
+      </div>
+    </div>
+
+    <div class="q-item" onclick="toggle(this)">
+      <div class="q-item-header">
+        <span class="q-item-date">apr 6</span>
+        <p class="q-item-text">"When does fine-tuning make a model worse?"</p>
+        <span class="q-item-chevron">›</span>
+      </div>
+      <div class="q-item-answer">
+        <p class="q-answer-text">When you fine-tune on data that's <strong>narrower than the task</strong> you actually need it to perform. The model gets better at one thing by forgetting everything adjacent to it.</p>
+        <a href="#" class="q-answer-link">further reading →</a>
+      </div>
+    </div>
+
+    <div class="q-item" onclick="toggle(this)">
+      <div class="q-item-header">
+        <span class="q-item-date">apr 5</span>
+        <p class="q-item-text">"When is RAG the wrong answer?"</p>
+        <span class="q-item-chevron">›</span>
+      </div>
+      <div class="q-item-answer">
+        <p class="q-answer-text">When the problem is about <strong>reasoning, not retrieval</strong>. RAG helps when you need the model to know something it wasn't trained on. It doesn't help when the model already has the knowledge but fails to use it correctly.</p>
+        <a href="#" class="q-answer-link">further reading →</a>
+      </div>
+    </div>
+
+    <div class="q-item" onclick="toggle(this)">
+      <div class="q-item-header">
+        <span class="q-item-date">apr 4</span>
+        <p class="q-item-text">"When does a hallucination become a bug?"</p>
+        <span class="q-item-chevron">›</span>
+      </div>
+      <div class="q-item-answer">
+        <p class="q-answer-text">When it reaches a user. A hallucination in an eval is a data point. A hallucination in production that a user acts on is a <strong>product defect</strong> — the distinction is about consequence, not content.</p>
+        <a href="#" class="q-answer-link">further reading →</a>
+      </div>
+    </div>
+
+    <div class="q-item" onclick="toggle(this)">
+      <div class="q-item-header">
+        <span class="q-item-date">apr 3</span>
+        <p class="q-item-text">"When should you not use an LLM?"</p>
+        <span class="q-item-chevron">›</span>
+      </div>
+      <div class="q-item-answer">
+        <p class="q-answer-text">When you need <strong>deterministic output</strong>. LLMs are probabilistic by nature — same input, different output. If your system requires the same answer every time, you want a lookup, a rules engine, or a traditional classifier.</p>
+        <a href="#" class="q-answer-link">further reading →</a>
+      </div>
+    </div>
+
+    <div class="q-item" onclick="toggle(this)">
+      <div class="q-item-header">
+        <span class="q-item-date">apr 2</span>
+        <p class="q-item-text">"When does 'AI-powered' mean nothing?"</p>
+        <span class="q-item-chevron">›</span>
+      </div>
+      <div class="q-item-answer">
+        <p class="q-answer-text">When the AI is doing something a regex or a sort could do just as well. <strong>"AI-powered" means something</strong> when the task requires understanding context, nuance, or ambiguity — not when it's pattern matching dressed up in a press release.</p>
+        <a href="#" class="q-answer-link">further reading →</a>
+      </div>
+    </div>
+
+    <div class="q-item" onclick="toggle(this)">
+      <div class="q-item-header">
+        <span class="q-item-date">apr 1</span>
+        <p class="q-item-text">"When is a model done training?"</p>
+        <span class="q-item-chevron">›</span>
+      </div>
+      <div class="q-item-answer">
+        <p class="q-answer-text">Technically, when loss stops improving. In practice, when the team runs out of <strong>compute budget, time, or patience</strong>. The idea of a "finished" model is mostly a business decision dressed up as a technical one.</p>
+        <a href="#" class="q-answer-link">further reading →</a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <a href="/" class="footer-wm"><span class="fwm-a">ask</span><span class="fwm-d">dumbquestions</span><span class="fwm-t">.ai</span></a>
+      <p class="footer-tag">one question · one answer · every weekday</p>
+    </div>
+    <div class="footer-right">
+      <a href="mailto:hello@askdumbquestions.ai">contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggle(el) {
+  el.classList.toggle('open');
+}
+// filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

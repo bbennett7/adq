@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>askdumbquestions.ai — Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fira+Code:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400;1,6..72,500&family=Fraunces:ital,opsz,wght@1,9..144,400&display=swap" rel="stylesheet">
+<style>
+
+/* ── TOKENS ── */
+:root {
+  --forest:     #1c2b24;
+  --forest-l:   #4a6b57;
+  --forest-ll:  #3d6650;
+  --sage:       #7ec49a;
+  --sage-light: #a8d9bc;
+  --stone:      #fdfcf8;
+  --stone-2:    #f5f3ee;
+  --stone-3:    #edeae3;
+  --rule-l:     #dddad2;
+  --rule-d:     #253330;
+  --ink:        #1a1a1a;
+  --muted-l:    #6a7a70;
+  --vmuted-l:   #a8b4ac;
+  --muted-d:    rgba(180,210,195,.48);
+  --text-d:     rgba(235,230,222,.92);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: #e8e4dd;
+  font-family: 'DM Sans', sans-serif; font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── SHEET CHROME ── */
+.sheet-nav {
+  background: #1a1a1a; padding: 16px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.sheet-title {
+  font-family: 'Fira Code', monospace; font-size: 12px;
+  color: rgba(255,255,255,.5); letter-spacing: .08em;
+}
+.sheet-toc {
+  display: flex; gap: 20px; list-style: none;
+}
+.sheet-toc a {
+  font-family: 'Fira Code', monospace; font-size: 10px;
+  color: rgba(255,255,255,.3); text-decoration: none; letter-spacing: .06em;
+  transition: color .15s;
+}
+.sheet-toc a:hover { color: var(--sage); }
+
+.section {
+  max-width: 1100px; margin: 0 auto; padding: 64px 40px;
+  border-bottom: 1px solid #d0ccc6;
+}
+.section:last-child { border-bottom: none; }
+
+.section-title {
+  font-family: 'Fira Code', monospace; font-size: 10px;
+  color: var(--muted-l); letter-spacing: .16em;
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 40px;
+}
+.section-title::after {
+  content: ''; flex: 1; height: 1px; background: var(--rule-l);
+}
+
+/* ── COLOR SECTION ── */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+.swatch {
+  border-radius: 6px; overflow: hidden;
+  border: 1px solid rgba(0,0,0,.08);
+}
+.swatch-block {
+  height: 80px;
+}
+.swatch-info {
+  background: var(--stone); padding: 10px 12px;
+}
+.swatch-name {
+  font-family: 'Fira Code', monospace; font-size: 10px;
+  color: var(--ink); letter-spacing: .04em; display: block; margin-bottom: 2px;
+}
+.swatch-hex {
+  font-family: 'Fira Code', monospace; font-size: 10px;
+  color: var(--vmuted-l); letter-spacing: .04em; display: block; margin-bottom: 4px;
+}
+.swatch-role {
+  font-family: 'DM Sans', sans-serif; font-size: 11px;
+  color: var(--muted-l); font-weight: 300; line-height: 1.5;
+}
+
+.color-section-label {
+  font-family: 'Fira Code', monospace; font-size: 10px;
+  color: var(--vmuted-l); letter-spacing: .1em;
+  display: block; margin: 28px 0 12px;
+}
+.color-section-label:first-child { margin-top: 0; }
+
+/* ── TYPOGRAPHY SECTION ── */
+.type-row {
+  padding: 28px 0;
+  border-bottom: 1px solid var(--rule-l);
+  display: grid; grid-template-columns: 200px 1fr;
+  gap: 32px; align-items: start;
+}
+.type-row:first-child { border-top: 1px solid var(--rule-l); }
+.type-meta { padding-top: 4px; }
+.type-font-name {
+  font-family: 'Fira Code', monospace; font-size: 11px;
+  color: var(--ink); display: block; margin-bottom: 4px; letter-spacing: .04em;
+}
+.type-detail {
+  font-family: 'Fira Code', monospace; font-size: 10px;
+  color: var(--vmuted-l); display: block; margin-bottom: 2px; letter-spacing: .04em;
+}
+.type-role {
+  font-family: 'DM Sans', sans-serif; font-size: 12px;
+  color: var(--muted-l); font-weight: 300; line-height: 1.6; margin-top: 6px;
+}
+
+/* type specimens */
+.spec-bricolage-hero {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 700; font-size: 48px;
+  line-height: 1.05; letter-spacing: -.03em; color: var(--forest);
+}
+.spec-bricolage-wm {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 24px; letter-spacing: -.01em; display: flex; align-items: baseline;
+}
+.spec-bricolage-label {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 600; font-size: 15px; color: var(--ink);
+}
+.spec-dm-body {
+  font-family: 'DM Sans', sans-serif; font-weight: 300;
+  font-size: 18px; line-height: 1.72; color: var(--muted-l); max-width: 580px;
+}
+.spec-dm-body strong { font-weight: 500; color: var(--ink); }
+.spec-newsreader {
+  font-family: 'Newsreader', serif; font-style: italic;
+  font-size: 20px; line-height: 1.5; color: #555; max-width: 520px;
+}
+.spec-caveat {
+  font-family: 'Caveat', cursive; font-weight: 600;
+  font-size: 24px; color: var(--forest-l);
+}
+.spec-fira {
+  font-family: 'Fira Code', monospace;
+  font-size: 13px; color: var(--sage); letter-spacing: .06em;
+}
+.spec-fraunces {
+  font-family: 'Fraunces', serif; font-style: italic;
+  font-weight: 400; font-size: 32px; color: var(--sage);
+}
+
+/* type scale */
+.type-scale { display: flex; flex-direction: column; gap: 0; }
+.scale-row {
+  padding: 14px 0; border-bottom: 1px solid var(--rule-l);
+  display: grid; grid-template-columns: 120px 1fr;
+  gap: 20px; align-items: baseline;
+}
+.scale-row:first-child { border-top: 1px solid var(--rule-l); }
+.scale-label {
+  font-family: 'Fira Code', monospace; font-size: 10px;
+  color: var(--vmuted-l); letter-spacing: .06em;
+}
+
+/* ── COMPONENT SECTION ── */
+.comp-row {
+  padding: 32px 0; border-bottom: 1px solid var(--rule-l);
+  display: grid; grid-template-columns: 200px 1fr;
+  gap: 32px; align-items: start;
+}
+.comp-row:first-child { border-top: 1px solid var(--rule-l); }
+.comp-meta {}
+.comp-label {
+  font-family: 'Fira Code', monospace; font-size: 11px;
+  color: var(--ink); display: block; margin-bottom: 4px; letter-spacing: .04em;
+}
+.comp-desc {
+  font-family: 'DM Sans', sans-serif; font-size: 12px;
+  color: var(--muted-l); font-weight: 300; line-height: 1.6;
+}
+.comp-demo {}
+
+/* wordmark demos */
+.wm-demo {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 18px; text-decoration: none;
+  display: flex; align-items: baseline; margin-bottom: 12px;
+}
+.wm-ask { font-weight: 300; color: var(--forest-l); }
+.wm-dq  { font-weight: 700; color: var(--ink); letter-spacing: -.025em; }
+.wm-tld { font-weight: 300; color: var(--vmuted-l); }
+.wm-dq-lt { font-weight: 700; color: var(--text-d); letter-spacing: -.025em; }
+.wm-tl-dk { font-weight: 300; color: var(--forest-l); }
+
+/* favicon demos */
+.fav-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.fav {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.fav-t {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800; letter-spacing: -.05em; line-height: 1.15;
+}
+.fav-b { display: flex; align-items: center; }
+.fav-q { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; }
+.fav-ai { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; letter-spacing: -.05em; }
+
+/* today card mini */
+.card-demo {
+  border: 1px solid var(--rule-l); border-radius: 8px; overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.05);
+}
+.card-demo-hdr {
+  padding: 11px 20px; border-bottom: 1px solid var(--rule-l);
+  background: var(--stone-2);
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+.card-demo-body { display: grid; grid-template-columns: 2fr 3fr; }
+.card-demo-q {
+  padding: 24px 28px; border-right: 1px solid var(--rule-l);
+}
+.card-demo-a { padding: 24px 28px; background: var(--stone-2); }
+
+/* archive row demo */
+.arch-demo { display: flex; flex-direction: column; }
+.arch-row-demo {
+  padding: 12px 0; border-bottom: 1px solid var(--rule-l);
+  display: grid; grid-template-columns: 52px 1fr auto;
+  gap: 12px; align-items: baseline;
+}
+.arch-row-demo:first-child { border-top: 1px solid var(--rule-l); }
+
+/* note card demo */
+.note-demo { display: flex; flex-direction: column; max-width: 300px; }
+.note-demo-item {
+  padding: 14px 0; border-bottom: 1px solid var(--rule-l);
+}
+.note-demo-item:first-child { border-top: 1px solid var(--rule-l); }
+
+/* ── SPACING SECTION ── */
+.spacing-grid { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-end; }
+.space-block { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.space-visual { background: var(--sage); opacity: .4; width: 20px; border-radius: 2px; }
+.space-label { font-family: 'Fira Code', monospace; font-size: 10px; color: var(--vmuted-l); letter-spacing: .06em; }
+
+/* ── DARK MODE SECTION ── */
+.dark-strip {
+  background: var(--forest); border-radius: 8px;
+  padding: 40px; margin-top: 0;
+}
+.dark-colors { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+.dark-swatch { border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
+.dark-swatch-block { height: 60px; }
+.dark-swatch-info { background: rgba(255,255,255,.05); padding: 8px 10px; }
+.dark-swatch-name { font-family: 'Fira Code', monospace; font-size: 10px; color: rgba(255,255,255,.7); letter-spacing: .04em; display: block; margin-bottom: 2px; }
+.dark-swatch-role { font-family: 'DM Sans', sans-serif; font-size: 10px; color: rgba(255,255,255,.3); font-weight: 300; }
+
+/* rule / usage notes */
+.rule-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.rule-card {
+  background: var(--stone); border: 1px solid var(--rule-l);
+  border-radius: 6px; padding: 20px 24px;
+}
+.rule-head {
+  font-family: 'Fira Code', monospace; font-size: 10px;
+  color: var(--sage); letter-spacing: .1em; display: block; margin-bottom: 12px;
+}
+.rule-body {
+  font-family: 'DM Sans', sans-serif; font-size: 13px;
+  color: var(--muted-l); font-weight: 300; line-height: 1.7;
+}
+.rule-body li { margin-left: 14px; margin-bottom: 6px; }
+
+</style>
+</head>
+<body>
+
+<!-- SHEET NAV -->
+<nav class="sheet-nav">
+  <span class="sheet-title">askdumbquestions.ai · design system · apr 2026</span>
+  <ul class="sheet-toc">
+    <li><a href="#colors">color</a></li>
+    <li><a href="#typography">typography</a></li>
+    <li><a href="#components">components</a></li>
+    <li><a href="#spacing">spacing</a></li>
+    <li><a href="#darkmode">dark mode</a></li>
+    <li><a href="#usage">usage rules</a></li>
+  </ul>
+</nav>
+
+
+<!-- ══ COLOR ══ -->
+<div class="section" id="colors">
+  <div class="section-title">01 — color palette</div>
+
+  <span class="color-section-label">primary surfaces</span>
+  <div class="color-grid">
+    <div class="swatch">
+      <div class="swatch-block" style="background:#1c2b24"></div>
+      <div class="swatch-info">
+        <span class="swatch-name">forest</span>
+        <span class="swatch-hex">#1c2b24</span>
+        <span class="swatch-role">Dark backgrounds, today card Q zone, nav (dark), footer</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#fdfcf8"></div>
+      <div class="swatch-info">
+        <span class="swatch-name">stone</span>
+        <span class="swatch-hex">#fdfcf8</span>
+        <span class="swatch-role">Primary page background, today card A zone</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#f5f3ee"></div>
+      <div class="swatch-info">
+        <span class="swatch-name">stone-2</span>
+        <span class="swatch-hex">#f5f3ee</span>
+        <span class="swatch-role">Card answer bg, card header, section alt backgrounds</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#edeae3"></div>
+      <div class="swatch-info">
+        <span class="swatch-name">stone-3</span>
+        <span class="swatch-hex">#edeae3</span>
+        <span class="swatch-role">Deeper alt backgrounds, hover states on light</span>
+      </div>
+    </div>
+  </div>
+
+  <span class="color-section-label">accent</span>
+  <div class="color-grid">
+    <div class="swatch">
+      <div class="swatch-block" style="background:#7ec49a"></div>
+      <div class="swatch-info">
+        <span class="swatch-name">sage</span>
+        <span class="swatch-hex">#7ec49a</span>
+        <span class="swatch-role">Primary accent: labels, links, the ? in favicon, Caveat asides. ACCENT ONLY — never as a background.</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#a8d9bc"></div>
+      <div class="swatch-info">
+        <span class="swatch-name">sage-light</span>
+        <span class="swatch-hex">#a8d9bc</span>
+        <span class="swatch-role">Sage on dark backgrounds (better contrast ratio against forest)</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#4a6b57"></div>
+      <div class="swatch-info">
+        <span class="swatch-name">forest-l</span>
+        <span class="swatch-hex">#4a6b57</span>
+        <span class="swatch-role">ask in wordmark, Caveat notes, muted text on dark, footer text, subdued labels</span>
+      </div>
+    </div>
+  </div>
+
+  <span class="color-section-label">text</span>
+  <div class="color-grid">
+    <div class="swatch">
+      <div class="swatch-block" style="background:#1a1a1a"></div>
+      <div class="swatch-info">
+        <span class="swatch-name">ink</span>
+        <span class="swatch-hex">#1a1a1a</span>
+        <span class="swatch-role">Primary text, bold weight in body copy, wordmark dumbquestions</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#6a7a70"></div>
+      <div class="swatch-info">
+        <span class="swatch-name">muted-l</span>
+        <span class="swatch-hex">#6a7a70</span>
+        <span class="swatch-role">Body text on light bg, answer text, note excerpts</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#a8b4ac"></div>
+      <div class="swatch-info">
+        <span class="swatch-name">vmuted-l</span>
+        <span class="swatch-hex">#a8b4ac</span>
+        <span class="swatch-role">Nav links (default), .tld in wordmark, secondary Fira Code labels</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#dddad2"></div>
+      <div class="swatch-info">
+        <span class="swatch-name">rule-l</span>
+        <span class="swatch-hex">#dddad2</span>
+        <span class="swatch-role">All rules/borders on light backgrounds. Archive row dividers, card borders.</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#253330"></div>
+      <div class="swatch-info">
+        <span class="swatch-name">rule-d</span>
+        <span class="swatch-hex">#253330</span>
+        <span class="swatch-role">All rules/borders on dark (forest) backgrounds</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ TYPOGRAPHY ══ -->
+<div class="section" id="typography">
+  <div class="section-title">02 — typography</div>
+
+  <div class="type-row">
+    <div class="type-meta">
+      <span class="type-font-name">Bricolage Grotesque</span>
+      <span class="type-detail">weights: 300, 700, 800</span>
+      <span class="type-detail">optical: 12–96</span>
+      <p class="type-role">Primary display + UI font. Headlines, wordmark, nav, labels, card titles, field note titles. The backbone of the site.</p>
+    </div>
+    <div>
+      <p class="spec-bricolage-hero" style="margin-bottom:20px">When does an AI<br>become an agent?</p>
+      <div class="spec-bricolage-wm" style="margin-bottom:12px">
+        <span style="font-weight:300;color:var(--forest-l)">ask</span><span style="font-weight:700;color:var(--ink);letter-spacing:-.025em">dumbquestions</span><span style="font-weight:300;color:var(--vmuted-l)">.ai</span>
+      </div>
+      <p class="spec-bricolage-label">field note title · 600 weight · 14–16px</p>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">
+      <span class="type-font-name">DM Sans</span>
+      <span class="type-detail">weight: 300 primary, 400, 500</span>
+      <p class="type-role">All body copy. Answer text, note excerpts, about text. Weight 300 is the default — use 500 for strong only, never bold body.</p>
+    </div>
+    <div>
+      <p class="spec-dm-body">When it can <strong>take action on your behalf</strong> rather than just describing action with language. If it can only tell you what to do, it's a chatbot. If it can go do it, it's an agent.</p>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">
+      <span class="type-font-name">Newsreader</span>
+      <span class="type-detail">italic 300–400 only</span>
+      <p class="type-role">Archive question list only. Italic serif for the question pullquotes in the archive. Never used for headings or body copy.</p>
+    </div>
+    <div>
+      <p class="spec-newsreader">"When does fine-tuning make a model worse?"</p>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">
+      <span class="type-font-name">Caveat</span>
+      <span class="type-detail">weight: 600, 700</span>
+      <p class="type-role">Personality / accent only. Practitioner asides (↳ lines), the word "works." in the hero headline. Never used for more than one or two words at a time in UI context. Signals a human voice.</p>
+    </div>
+    <div>
+      <span class="spec-caveat" style="display:block;margin-bottom:8px">↳ most things called "agentic" are still just describing.</span>
+      <span class="spec-caveat" style="font-size:40px;color:var(--sage)">works.</span>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">
+      <span class="type-font-name">Fira Code</span>
+      <span class="type-detail">weight: 300, 400</span>
+      <p class="type-role">All labels, dates, numbers, metadata, the "further reading →" link. Always lowercase. Letter spacing .06–.1em. Never uppercase. The technical/editorial voice.</p>
+    </div>
+    <div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <span class="spec-fira">apr 7 · 2026</span>
+        <span class="spec-fira">no. 007</span>
+        <span class="spec-fira" style="color:var(--vmuted-l)">today's question</span>
+        <span class="spec-fira" style="color:var(--vmuted-l)">question · answer · recent questions · field notes</span>
+        <span class="spec-fira">further reading →</span>
+        <span class="spec-fira" style="color:var(--vmuted-l)">mar 28 · 4 min</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">
+      <span class="type-font-name">Fraunces</span>
+      <span class="type-detail">italic 400 only</span>
+      <p class="type-role">The ? in the favicon mark only. The italic Fraunces ? gives the favicon its character — the question mark as a thought, not punctuation.</p>
+    </div>
+    <div>
+      <span class="spec-fraunces">?</span>
+    </div>
+  </div>
+
+  <!-- type scale -->
+  <div style="margin-top:40px">
+    <div class="section-title" style="font-size:10px;color:var(--vmuted-l);margin-bottom:24px">type scale</div>
+    <div class="type-scale">
+      <div class="scale-row">
+        <span class="scale-label">hero / 46px</span>
+        <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:46px;letter-spacing:-.03em;line-height:1.07;color:var(--forest)">When does an AI</span>
+      </div>
+      <div class="scale-row">
+        <span class="scale-label">h2 / 32px</span>
+        <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:32px;letter-spacing:-.025em;color:var(--forest)">I build these systems.</span>
+      </div>
+      <div class="scale-row">
+        <span class="scale-label">h3 / 22px</span>
+        <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:22px;letter-spacing:-.02em;color:var(--forest)">The things that don't go stale.</span>
+      </div>
+      <div class="scale-row">
+        <span class="scale-label">note title / 14px</span>
+        <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:14px;letter-spacing:-.01em;color:var(--forest)">What actually happens when your RAG pipeline hallucinates</span>
+      </div>
+      <div class="scale-row">
+        <span class="scale-label">body / 18px</span>
+        <span style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:18px;line-height:1.72;color:var(--muted-l)">When it can take action on your behalf rather than just describing action.</span>
+      </div>
+      <div class="scale-row">
+        <span class="scale-label">body sm / 13px</span>
+        <span style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:13px;line-height:1.65;color:var(--muted-l)">The gap between eval and production is almost always an infrastructure problem, not a model problem.</span>
+      </div>
+      <div class="scale-row">
+        <span class="scale-label">archive q / 17px</span>
+        <span style="font-family:'Newsreader',serif;font-style:italic;font-size:17px;line-height:1.5;color:#555">"When does a hallucination become a bug?"</span>
+      </div>
+      <div class="scale-row">
+        <span class="scale-label">caveat aside / 20px</span>
+        <span style="font-family:'Caveat',cursive;font-weight:600;font-size:20px;color:var(--forest-l)">↳ most things called "agentic" are still just describing.</span>
+      </div>
+      <div class="scale-row">
+        <span class="scale-label">label / 10px</span>
+        <span style="font-family:'Fira Code',monospace;font-size:10px;color:var(--sage);letter-spacing:.1em">apr 7 · 2026 · no. 007 · today's question · field notes</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ COMPONENTS ══ -->
+<div class="section" id="components">
+  <div class="section-title">03 — components</div>
+
+  <!-- wordmark -->
+  <div class="comp-row">
+    <div class="comp-meta">
+      <span class="comp-label">wordmark</span>
+      <p class="comp-desc">Three-part: ask (300, forest-l), dumbquestions (700, ink), .ai (300, vmuted). Same font size throughout — weight contrast does all the work.</p>
+    </div>
+    <div class="comp-demo">
+      <a class="wm-demo" style="font-size:22px;margin-bottom:16px"><span class="wm-ask">ask</span><span class="wm-dq">dumbquestions</span><span class="wm-tld">.ai</span></a>
+      <a class="wm-demo" style="font-size:16px;margin-bottom:16px"><span class="wm-ask">ask</span><span class="wm-dq">dumbquestions</span><span class="wm-tld">.ai</span></a>
+      <!-- dark version -->
+      <div style="background:var(--forest);padding:12px 16px;border-radius:6px;display:inline-block">
+        <a class="wm-demo" style="font-size:16px;margin-bottom:0"><span class="wm-ask">ask</span><span class="wm-dq-lt">dumbquestions</span><span class="wm-tl-dk">.ai</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- favicon -->
+  <div class="comp-row">
+    <div class="comp-meta">
+      <span class="comp-label">favicon / mark</span>
+      <p class="comp-desc">Two dense rows: adq (Bricolage 800) over ?ai (Fraunces italic ? in sage + Bricolage 800 ai). Degrades to ? at 16px. Forest or stone bg depending on context.</p>
+    </div>
+    <div class="comp-demo">
+      <div class="fav-row">
+        <!-- 64 forest -->
+        <div>
+          <div class="fav" style="width:64px;height:64px;background:var(--forest);border-radius:8px">
+            <span class="fav-t" style="font-size:18px;color:rgba(255,255,255,.75)">adq</span>
+            <div class="fav-b"><span class="fav-q" style="font-size:18px">?</span><span class="fav-ai" style="font-size:18px;color:rgba(255,255,255,.75)">ai</span></div>
+          </div>
+          <p style="font-family:'Fira Code',monospace;font-size:9px;color:var(--vmuted-l);text-align:center;margin-top:6px">64 · forest</p>
+        </div>
+        <!-- 32 forest -->
+        <div>
+          <div class="fav" style="width:32px;height:32px;background:var(--forest);border-radius:4px">
+            <span class="fav-t" style="font-size:9px;color:rgba(255,255,255,.75)">adq</span>
+            <div class="fav-b"><span class="fav-q" style="font-size:9px">?</span><span class="fav-ai" style="font-size:9px;color:rgba(255,255,255,.75)">ai</span></div>
+          </div>
+          <p style="font-family:'Fira Code',monospace;font-size:9px;color:var(--vmuted-l);text-align:center;margin-top:6px">32</p>
+        </div>
+        <!-- 20 forest -->
+        <div>
+          <div class="fav" style="width:20px;height:20px;background:var(--forest);border-radius:3px">
+            <span class="fav-t" style="font-size:5.5px;color:rgba(255,255,255,.75)">adq</span>
+            <div class="fav-b"><span class="fav-q" style="font-size:5.5px">?</span><span class="fav-ai" style="font-size:5.5px;color:rgba(255,255,255,.75)">ai</span></div>
+          </div>
+          <p style="font-family:'Fira Code',monospace;font-size:9px;color:var(--vmuted-l);text-align:center;margin-top:6px">20</p>
+        </div>
+        <!-- 16 — degrade to ? -->
+        <div>
+          <div class="fav" style="width:16px;height:16px;background:var(--forest);border-radius:2px;justify-content:center">
+            <span style="font-family:'Fraunces',serif;font-style:italic;font-weight:400;font-size:11px;color:var(--sage)">?</span>
+          </div>
+          <p style="font-family:'Fira Code',monospace;font-size:9px;color:var(--vmuted-l);text-align:center;margin-top:6px">16 → ?</p>
+        </div>
+        <!-- sage bg variant -->
+        <div style="margin-left:16px">
+          <div class="fav" style="width:64px;height:64px;background:var(--sage);border-radius:8px">
+            <span class="fav-t" style="font-size:18px;color:var(--forest)">adq</span>
+            <div class="fav-b"><span style="font-family:'Fraunces',serif;font-style:italic;font-size:18px;color:var(--forest-l)">?</span><span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:18px;letter-spacing:-.05em;color:var(--forest)">ai</span></div>
+          </div>
+          <p style="font-family:'Fira Code',monospace;font-size:9px;color:var(--vmuted-l);text-align:center;margin-top:6px">64 · sage</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- today card -->
+  <div class="comp-row">
+    <div class="comp-meta">
+      <span class="comp-label">today card</span>
+      <p class="comp-desc">Always horizontal (2fr / 3fr). Header row: date (sage), label (vmuted), no. (vmuted). Q and A labels top-aligned at same vertical position. Stone-2 for A side and header bg.</p>
+    </div>
+    <div class="comp-demo">
+      <div class="card-demo">
+        <div class="card-demo-hdr">
+          <span style="font-family:'Fira Code',monospace;font-size:11px;color:var(--sage);letter-spacing:.07em">apr 7 · 2026</span>
+          <span style="font-family:'Fira Code',monospace;font-size:10px;color:var(--vmuted-l);letter-spacing:.08em">today's question</span>
+          <span style="font-family:'Fira Code',monospace;font-size:11px;color:var(--vmuted-l);letter-spacing:.07em;text-align:right">no. 007</span>
+        </div>
+        <div class="card-demo-body">
+          <div class="card-demo-q">
+            <span style="font-family:'Fira Code',monospace;font-size:10px;color:var(--sage);letter-spacing:.08em;display:block;margin-bottom:12px">question</span>
+            <p style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:22px;line-height:1.1;letter-spacing:-.025em;color:var(--forest)">When does an AI become an agent?</p>
+          </div>
+          <div class="card-demo-a">
+            <span style="font-family:'Fira Code',monospace;font-size:10px;color:var(--vmuted-l);letter-spacing:.08em;display:block;margin-bottom:12px">answer</span>
+            <p style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;line-height:1.7;color:var(--muted-l);margin-bottom:10px">When it can <strong style="font-weight:500;color:var(--ink)">take action on your behalf</strong> rather than just describing action with language.</p>
+            <span style="font-family:'Caveat',cursive;font-weight:600;font-size:16px;color:var(--forest-l);display:block;margin-bottom:12px">↳ most things called "agentic" are still just describing.</span>
+            <span style="font-family:'Fira Code',monospace;font-size:11px;color:var(--sage);letter-spacing:.04em">further reading →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- archive row -->
+  <div class="comp-row">
+    <div class="comp-meta">
+      <span class="comp-label">archive row</span>
+      <p class="comp-desc">3-col grid: date (Fira Code, #ccc), question (Newsreader italic), arrow (Fira Code). Hover: opacity .6, arrow turns sage + shifts right 3px.</p>
+    </div>
+    <div class="comp-demo">
+      <div class="arch-demo">
+        <div class="arch-row-demo">
+          <span style="font-family:'Fira Code',monospace;font-size:10px;color:#ccc;letter-spacing:.06em">apr 6</span>
+          <p style="font-family:'Newsreader',serif;font-style:italic;font-size:17px;line-height:1.5;color:#555">"When does fine-tuning make a model worse?"</p>
+          <span style="font-family:'Fira Code',monospace;font-size:11px;color:var(--rule-l)">→</span>
+        </div>
+        <div class="arch-row-demo">
+          <span style="font-family:'Fira Code',monospace;font-size:10px;color:#ccc;letter-spacing:.06em">apr 5</span>
+          <p style="font-family:'Newsreader',serif;font-style:italic;font-size:17px;line-height:1.5;color:#555">"When is RAG the wrong answer?"</p>
+          <span style="font-family:'Fira Code',monospace;font-size:11px;color:var(--sage)">→</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- field note item -->
+  <div class="comp-row">
+    <div class="comp-meta">
+      <span class="comp-label">field note item</span>
+      <p class="comp-desc">tag (Fira Code, sage), title (Bricolage 600, forest), excerpt (DM Sans 300, muted), meta (Fira Code, #ccc). Hover: opacity .65.</p>
+    </div>
+    <div class="comp-demo">
+      <div class="note-demo">
+        <div class="note-demo-item">
+          <span style="font-family:'Fira Code',monospace;font-size:9px;color:var(--sage);letter-spacing:.08em;display:block;margin-bottom:7px">infrastructure</span>
+          <p style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:14px;color:var(--forest);line-height:1.35;letter-spacing:-.01em;margin-bottom:6px">What actually happens when your RAG pipeline hallucinates at 3am</p>
+          <p style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:12px;line-height:1.6;color:var(--muted-l);margin-bottom:8px">The gap between eval and production is almost always infrastructure, not model.</p>
+          <p style="font-family:'Fira Code',monospace;font-size:9px;color:#ccc;letter-spacing:.06em">mar 28 · 4 min</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ══ SPACING ══ -->
+<div class="section" id="spacing">
+  <div class="section-title">04 — spacing scale</div>
+  <div class="spacing-grid">
+    <div class="space-block"><div class="space-visual" style="height:4px"></div><span class="space-label">4</span></div>
+    <div class="space-block"><div class="space-visual" style="height:8px"></div><span class="space-label">8</span></div>
+    <div class="space-block"><div class="space-visual" style="height:12px"></div><span class="space-label">12</span></div>
+    <div class="space-block"><div class="space-visual" style="height:16px"></div><span class="space-label">16</span></div>
+    <div class="space-block"><div class="space-visual" style="height:20px"></div><span class="space-label">20</span></div>
+    <div class="space-block"><div class="space-visual" style="height:24px"></div><span class="space-label">24</span></div>
+    <div class="space-block"><div class="space-visual" style="height:32px"></div><span class="space-label">32</span></div>
+    <div class="space-block"><div class="space-visual" style="height:40px"></div><span class="space-label">40</span></div>
+    <div class="space-block"><div class="space-visual" style="height:48px"></div><span class="space-label">48</span></div>
+    <div class="space-block"><div class="space-visual" style="height:56px"></div><span class="space-label">56</span></div>
+    <div class="space-block"><div class="space-visual" style="height:64px"></div><span class="space-label">64</span></div>
+  </div>
+
+  <div style="margin-top:32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+    <div style="background:var(--stone);border:1px solid var(--rule-l);border-radius:6px;padding:16px 20px">
+      <span style="font-family:'Fira Code',monospace;font-size:10px;color:var(--sage);letter-spacing:.1em;display:block;margin-bottom:8px">page</span>
+      <p style="font-family:'DM Sans',sans-serif;font-size:13px;color:var(--muted-l);font-weight:300;line-height:1.65">Max width: 1200px<br>Side padding: 40px<br>Nav height: 60px</p>
+    </div>
+    <div style="background:var(--stone);border:1px solid var(--rule-l);border-radius:6px;padding:16px 20px">
+      <span style="font-family:'Fira Code',monospace;font-size:10px;color:var(--sage);letter-spacing:.1em;display:block;margin-bottom:8px">today card</span>
+      <p style="font-family:'DM Sans',sans-serif;font-size:13px;color:var(--muted-l);font-weight:300;line-height:1.65">Card padding: 36px<br>Header padding: 13px 32px<br>Q/A columns: 2fr / 3fr</p>
+    </div>
+    <div style="background:var(--stone);border:1px solid var(--rule-l);border-radius:6px;padding:16px 20px">
+      <span style="font-family:'Fira Code',monospace;font-size:10px;color:var(--sage);letter-spacing:.1em;display:block;margin-bottom:8px">below grid</span>
+      <p style="font-family:'DM Sans',sans-serif;font-size:13px;color:var(--muted-l);font-weight:300;line-height:1.65">Archive: 1fr<br>Field notes: 320px<br>Section top pad: 44px</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ DARK MODE ══ -->
+<div class="section" id="darkmode">
+  <div class="section-title">05 — dark mode</div>
+  <p style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;line-height:1.7;color:var(--muted-l);max-width:600px;margin-bottom:28px">Dark mode uses forest as the background. Sage remains the accent — same role, just against dark. Sage-light replaces sage for improved contrast. Forest-l is used for subdued text where stone would be too bright. No green backgrounds — sage is always accent only.</p>
+
+  <div class="dark-strip">
+    <div class="dark-colors">
+      <div class="dark-swatch"><div class="dark-swatch-block" style="background:#1c2b24"></div><div class="dark-swatch-info"><span class="dark-swatch-name">forest → bg</span><span class="dark-swatch-role">Primary dark background</span></div></div>
+      <div class="dark-swatch"><div class="dark-swatch-block" style="background:#253330"></div><div class="dark-swatch-info"><span class="dark-swatch-name">rule-d → dividers</span><span class="dark-swatch-role">Rules and borders on dark</span></div></div>
+      <div class="dark-swatch"><div class="dark-swatch-block" style="background:rgba(235,230,222,.92)"></div><div class="dark-swatch-info"><span class="dark-swatch-name">text-d → primary text</span><span class="dark-swatch-role">Headlines on forest bg</span></div></div>
+      <div class="dark-swatch"><div class="dark-swatch-block" style="background:rgba(180,210,195,.48)"></div><div class="dark-swatch-info"><span class="dark-swatch-name">muted-d → body text</span><span class="dark-swatch-role">Body copy on dark</span></div></div>
+      <div class="dark-swatch"><div class="dark-swatch-block" style="background:#a8d9bc"></div><div class="dark-swatch-info"><span class="dark-swatch-name">sage-light → accent</span><span class="dark-swatch-role">Links, labels on dark bg</span></div></div>
+      <div class="dark-swatch"><div class="dark-swatch-block" style="background:#4a6b57"></div><div class="dark-swatch-info"><span class="dark-swatch-name">forest-l → subdued</span><span class="dark-swatch-role">Footer text, muted labels</span></div></div>
+    </div>
+
+    <!-- dark type sample -->
+    <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--rule-d)">
+      <p style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:32px;line-height:1.1;letter-spacing:-.025em;color:rgba(235,230,222,.92);margin-bottom:12px">When does an AI become an agent?</p>
+      <p style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:17px;line-height:1.72;color:rgba(180,210,195,.48);margin-bottom:10px">When it can <strong style="font-weight:500;color:rgba(235,230,222,.92)">take action on your behalf</strong> rather than just describing action.</p>
+      <span style="font-family:'Caveat',cursive;font-weight:600;font-size:19px;color:var(--forest-l);display:block;margin-bottom:12px">↳ most things called "agentic" are still just describing.</span>
+      <span style="font-family:'Fira Code',monospace;font-size:11px;color:var(--sage-light);letter-spacing:.06em">apr 7 · 2026 · no. 007 · further reading →</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ USAGE RULES ══ -->
+<div class="section" id="usage">
+  <div class="section-title">06 — usage rules</div>
+  <div class="rule-grid">
+    <div class="rule-card">
+      <span class="rule-head">color rules</span>
+      <ul class="rule-body">
+        <li>Sage is an accent color only — never use as a background</li>
+        <li>Forest is the only dark background</li>
+        <li>Stone / stone-2 / stone-3 are the only light backgrounds</li>
+        <li>Use sage-light (not sage) for links and labels on forest backgrounds</li>
+        <li>Rule-l on light bg, rule-d on dark bg — never mix</li>
+        <li>Forest-l appears in: ask wordmark, Caveat asides, footer text on dark, muted labels on dark</li>
+      </ul>
+    </div>
+    <div class="rule-card">
+      <span class="rule-head">typography rules</span>
+      <ul class="rule-body">
+        <li>All Fira Code labels are lowercase — no text-transform: uppercase anywhere</li>
+        <li>DM Sans default weight is 300 — use 500 for strong only</li>
+        <li>Caveat is used sparingly — one or two lines max per section</li>
+        <li>Newsreader italic is for archive question lists only</li>
+        <li>Fraunces italic is for the ? in the favicon only</li>
+        <li>Bricolage 700/800 for display, 300/400 for wordmark ask/.ai</li>
+      </ul>
+    </div>
+    <div class="rule-card">
+      <span class="rule-head">component rules</span>
+      <ul class="rule-body">
+        <li>Today card is always horizontal (never vertical on desktop)</li>
+        <li>Question and answer labels are top-aligned at the same vertical position</li>
+        <li>Card header always: date (sage) · label (vmuted) · no. (vmuted)</li>
+        <li>Archive rows use Newsreader italic for the question text</li>
+        <li>Field note items always have: tag + title + excerpt + meta</li>
+        <li>Hover state is always opacity .6–.65 — no color changes on hover except arrows</li>
+      </ul>
+    </div>
+    <div class="rule-card">
+      <span class="rule-head">layout rules</span>
+      <ul class="rule-body">
+        <li>Max content width: 1200px, side padding: 40px</li>
+        <li>Today card: 2fr question / 3fr answer</li>
+        <li>Below grid: 1fr archive / 320px field notes</li>
+        <li>Start here lives on its own page — not on the landing page</li>
+        <li>About lives on its own page — not on the landing page</li>
+        <li>Nav: date left / wordmark center / links right</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
