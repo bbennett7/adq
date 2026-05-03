@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//private/tmp/**)",
+      "Bash(pnpm create *)",
+      "Bash(cp -r /tmp/adq-init/src /Users/macuser/Development/adq/)",
+      "Bash(cp -r /tmp/adq-init/public /Users/macuser/Development/adq/)",
+      "Bash(cp /tmp/adq-init/package.json /tmp/adq-init/pnpm-lock.yaml /tmp/adq-init/pnpm-workspace.yaml /tmp/adq-init/tsconfig.json /tmp/adq-init/next.config.ts /tmp/adq-init/next-env.d.ts /tmp/adq-init/postcss.config.mjs /tmp/adq-init/eslint.config.mjs /Users/macuser/Development/adq/)",
+      "Bash(pnpm install *)",
+      "Bash(pnpm exec *)",
+      "Bash(pnpm build *)",
+      "Bash(open -a \"Google Chrome\" \"file:///Users/macuser/Development/adq/mocks/askdumbquestions.html\")",
+      "Bash(screencapture -x /tmp/mock-counter.png)",
+      "Bash(pnpm dev *)",
+      "Bash(screencapture /tmp/app-header.png)",
+      "Bash(kill %1)",
+      "Bash(python3 *)",
+      "Bash(pip3 install *)",
+      "Bash(pnpm lint *)",
+      "Bash(pnpm add *)",
+      "Bash(pnpm biome *)",
+      "Bash(pnpm format *)",
+      "Bash(git checkout *)",
+      "Bash(git restore *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}
