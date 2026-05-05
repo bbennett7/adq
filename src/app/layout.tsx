@@ -61,6 +61,7 @@ export default function RootLayout({
 				<header className="site-header">
 					<div className="site-header-inner wrap">
 						<div className="site-header-counter">
+							{/* TODO: wire to live count query when DB is connected */}
 							<b>142</b> answered &nbsp;·&nbsp; <span className="inf">∞</span>{' '}
 							remaining
 						</div>
@@ -70,10 +71,10 @@ export default function RootLayout({
 							<span className="wordmark-tld">.ai</span>
 						</Link>
 						<nav className="site-header-nav">
-							<a href="/archive">Questions</a>
-							<a href="/notes">Field Notes</a>
-							<a href="/resources">Resources</a>
-							<a href="/about">About</a>
+							<Link href="/archive">Questions</Link>
+							<Link href="/notes">Field Notes</Link>
+							<Link href="/resources">Resources</Link>
+							<Link href="/about">About</Link>
 						</nav>
 					</div>
 				</header>
