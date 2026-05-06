@@ -2,12 +2,31 @@ import { cache } from 'react';
 import type { Question, QuestionsPage } from './schemas';
 import { stubRecent, stubToday } from './stub-data';
 
-export type { Question, QuestionsPage };
-
 export const getLatestQuestion = cache(async (): Promise<Question> => {
 	// TODO: query most recent published, non-deleted question where publishedAt <= now and deletedAt IS NULL
 	return stubToday;
 });
+
+export const getQuestion = cache(
+	async (number: number): Promise<Question | null> => {
+		// TODO: SELECT * FROM questions LEFT JOIN further_reading ... WHERE number = $number AND deletedAt IS NULL
+		const found = stubRecent.find((q) => q.number === number);
+		return found ?? null;
+	},
+);
+
+export const getAdjacentQuestions = cache(
+	async (
+		number: number,
+	): Promise<{ prev: Question | null; next: Question | null }> => {
+		// TODO: prev = WHERE number < $number AND deletedAt IS NULL ORDER BY number DESC LIMIT 1
+		//       next = WHERE number > $number AND deletedAt IS NULL ORDER BY number ASC LIMIT 1
+		const sorted = [...stubRecent].sort((a, b) => a.number - b.number);
+		const prev = [...sorted].reverse().find((q) => q.number < number) ?? null;
+		const next = sorted.find((q) => q.number > number) ?? null;
+		return { prev, next };
+	},
+);
 
 export const getRecentQuestions = cache(
 	async (params: {
