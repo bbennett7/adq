@@ -1,6 +1,6 @@
 import Link from 'next/link';
+import { QuestionCard } from '@/components/QuestionCard';
 import { RecentQuestions } from '@/components/RecentQuestions';
-import { TodayCard } from '@/components/TodayCard';
 import { getLatestQuestion, getRecentQuestions } from '@/lib/data';
 
 export default async function Home() {
@@ -11,7 +11,7 @@ export default async function Home() {
 
 	return (
 		<>
-			<TodayCard data={today} />
+			<QuestionCard data={today} />
 
 			<div className="columns">
 				<div>
