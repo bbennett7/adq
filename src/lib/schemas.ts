@@ -1,5 +1,12 @@
 import { z } from 'zod/v4';
 
+export const ResourceLinkSchema = z.object({
+	label: z.string().min(1),
+	url: z.url(),
+	source: z.string().min(1),
+	author: z.string().optional(),
+});
+
 export const QuestionSchema = z.object({
 	id: z.uuid(),
 	number: z.number().int().positive(),
@@ -10,6 +17,7 @@ export const QuestionSchema = z.object({
 	createdAt: z.iso.datetime(),
 	updatedAt: z.iso.datetime(),
 	deletedAt: z.iso.datetime().nullable(),
+	resources: z.array(ResourceLinkSchema).optional(),
 });
 
 export const QuestionsPageSchema = z.object({
@@ -22,6 +30,7 @@ export const QuestionsQuerySchema = z.object({
 	cursor: z.coerce.number().int().positive().optional(),
 });
 
+export type ResourceLink = z.infer<typeof ResourceLinkSchema>;
 export type Question = z.infer<typeof QuestionSchema>;
 export type QuestionsPage = z.infer<typeof QuestionsPageSchema>;
 export type QuestionsQuery = z.infer<typeof QuestionsQuerySchema>;

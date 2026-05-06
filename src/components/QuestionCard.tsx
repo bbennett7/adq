@@ -1,10 +1,8 @@
-import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import rehypeSanitize from 'rehype-sanitize';
-import { routes } from '@/lib/routes';
 import type { Question } from '@/lib/schemas';
 
-export function TodayCard({ data }: { data: Question }) {
+export function QuestionCard({ data }: { data: Question }) {
 	const num = String(data.number).padStart(3, '0');
 	const published = new Date(data.publishedAt).toLocaleDateString('en-US', {
 		month: 'long',
@@ -36,12 +34,6 @@ export function TodayCard({ data }: { data: Question }) {
 					<ReactMarkdown rehypePlugins={[rehypeSanitize]}>
 						{data.answerMd}
 					</ReactMarkdown>
-					<Link
-						href={routes.furtherReading(data.number)}
-						className="further-link"
-					>
-						Further reading →
-					</Link>
 				</div>
 			</div>
 		</section>

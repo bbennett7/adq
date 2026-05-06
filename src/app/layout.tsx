@@ -71,10 +71,10 @@ export default function RootLayout({
 							<span className="wordmark-tld">.ai</span>
 						</Link>
 						<nav className="site-header-nav">
-							<Link href="/archive">Questions</Link>
-							<Link href="/notes">Field Notes</Link>
-							<Link href="/resources">Resources</Link>
-							<Link href="/about">About</Link>
+							<Link href="/archive">Archive</Link>
+							<span className="site-header-nav-disabled">Field Notes</span>
+							<span className="site-header-nav-disabled">Resources</span>
+							<span className="site-header-nav-disabled">About</span>
 						</nav>
 					</div>
 				</header>
