@@ -6,9 +6,13 @@ export function ThemeToggle() {
 	const [theme, setTheme] = useState<'light' | 'dark' | null>(null);
 
 	useEffect(() => {
-		const raw = localStorage.getItem('theme');
-		const stored: 'light' | 'dark' | null =
-			raw === 'light' || raw === 'dark' ? raw : null;
+		let stored: 'light' | 'dark' | null = null;
+		try {
+			const raw = localStorage.getItem('theme');
+			if (raw === 'light' || raw === 'dark') stored = raw;
+		} catch {
+			// localStorage unavailable (private browsing, etc.)
+		}
 		const prefersDark = window.matchMedia(
 			'(prefers-color-scheme: dark)',
 		).matches;
