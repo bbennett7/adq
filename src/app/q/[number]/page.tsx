@@ -12,12 +12,13 @@ export default async function QuestionPage({
 }) {
 	const { number } = await params;
 	const n = Number(number);
-	const [question, { prev, next }] = await Promise.all([
-		getQuestion(n),
-		getAdjacentQuestions(n),
-	]);
 
+	if (!Number.isInteger(n) || n < 1) notFound();
+
+	const question = await getQuestion(n);
 	if (!question) notFound();
+
+	const { prev, next } = await getAdjacentQuestions(n);
 
 	return (
 		<div className="question-page">
