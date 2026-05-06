@@ -7,6 +7,8 @@ import { routes } from '@/lib/routes';
 import type { Question } from '@/lib/schemas';
 import { Button } from './Button';
 
+export const ARCHIVE_PAGE_SIZE = 25;
+
 export function QuestionList({
 	initial,
 	initialCursor,
@@ -17,14 +19,18 @@ export function QuestionList({
 	const [questions, setQuestions] = useState(initial);
 	const [cursor, setCursor] = useState(initialCursor);
 	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<string | null>(null);
 
 	async function loadMore() {
 		if (cursor === null) return;
 		setLoading(true);
+		setError(null);
 		try {
-			const page = await fetchQuestions({ limit: 25, cursor });
+			const page = await fetchQuestions({ limit: ARCHIVE_PAGE_SIZE, cursor });
 			setQuestions((prev) => [...prev, ...page.questions]);
 			setCursor(page.nextCursor);
+		} catch {
+			setError('Failed to load more questions. Please try again.');
 		} finally {
 			setLoading(false);
 		}
@@ -46,6 +52,7 @@ export function QuestionList({
 					</li>
 				))}
 			</ul>
+			{error && <p className="load-more-error">{error}</p>}
 			{cursor !== null && (
 				<div className="load-more">
 					<Button onClick={loadMore} disabled={loading}>

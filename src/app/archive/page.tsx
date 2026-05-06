@@ -1,8 +1,10 @@
-import { QuestionList } from '@/components/QuestionList';
+import { ARCHIVE_PAGE_SIZE, QuestionList } from '@/components/QuestionList';
 import { getRecentQuestions } from '@/lib/data';
 
 export default async function ArchivePage() {
-	const { questions, nextCursor } = await getRecentQuestions({ limit: 25 });
+	const { questions, nextCursor } = await getRecentQuestions({
+		limit: ARCHIVE_PAGE_SIZE,
+	});
 
 	return (
 		<div className="archive">
