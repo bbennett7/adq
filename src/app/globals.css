@@ -746,6 +746,16 @@ ul.qlist a:hover {
 	text-align: center;
 }
 
+.load-more-error {
+	font-family: var(--f-mono);
+	font-size: 11px;
+	color: var(--muted);
+	letter-spacing: 0.06em;
+	text-align: center;
+	padding: 16px 0 0;
+	margin: 0;
+}
+
 /* ══════════════════════════════════════
    QUESTION PAGE
    ══════════════════════════════════════ */
@@ -818,14 +828,14 @@ ul.qlist a:hover {
 }
 
 /* ══════════════════════════════════════
-   FURTHER READING
+   RESOURCE LINKS
    ══════════════════════════════════════ */
 
-.further-reading {
+.resource-links {
 	margin-top: 40px;
 }
 
-.further-reading-head {
+.resource-links-head {
 	font-family: var(--f-ui);
 	font-size: 13px;
 	font-weight: 600;
@@ -837,17 +847,17 @@ ul.qlist a:hover {
 	border-bottom: 1px solid var(--rule);
 }
 
-.further-reading-list {
+.resource-links-list {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
 
-ul.further-reading-list li {
+ul.resource-links-list li {
 	border-bottom: 1px solid var(--rule);
 }
 
-.further-reading-list a {
+.resource-links-list a {
 	display: flex;
 	align-items: baseline;
 	justify-content: space-between;
@@ -856,7 +866,7 @@ ul.further-reading-list li {
 	text-decoration: none;
 }
 
-.further-reading-label {
+.resource-links-label {
 	font-family: var(--f-ui);
 	font-size: 16px;
 	color: var(--ink);
@@ -864,11 +874,11 @@ ul.further-reading-list li {
 	line-height: 1.35;
 }
 
-.further-reading-list a:hover .further-reading-label {
+.resource-links-list a:hover .resource-links-label {
 	color: var(--accent);
 }
 
-.further-reading-source {
+.resource-links-source {
 	font-family: var(--f-mono);
 	font-size: 10px;
 	color: var(--muted);
@@ -1000,7 +1010,7 @@ ul.further-reading-list li {
 		margin-bottom: 48px;
 	}
 
-	.further-reading-list a {
+	.resource-links-list a {
 		flex-direction: column;
 		gap: 6px;
 	}
