@@ -22,7 +22,7 @@ export const getAdjacentQuestions = cache(
 		// TODO: prev = WHERE number < $number AND deletedAt IS NULL ORDER BY number DESC LIMIT 1
 		//       next = WHERE number > $number AND deletedAt IS NULL ORDER BY number ASC LIMIT 1
 		const sorted = [...stubRecent].sort((a, b) => a.number - b.number);
-		const prev = [...sorted].reverse().find((q) => q.number < number) ?? null;
+		const prev = sorted.findLast((q) => q.number < number) ?? null;
 		const next = sorted.find((q) => q.number > number) ?? null;
 		return { prev, next };
 	},
