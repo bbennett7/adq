@@ -365,6 +365,10 @@ main {
 .site-header-nav a:hover {
 	color: var(--ink);
 }
+.site-header-nav-disabled {
+	opacity: 0.25;
+	cursor: default;
+}
 
 /* ══════════════════════════════════════
    SITE FOOTER
@@ -714,6 +718,167 @@ ul.qlist a:hover {
 }
 
 /* ══════════════════════════════════════
+   ARCHIVE PAGE
+   ══════════════════════════════════════ */
+
+.archive {
+	margin-bottom: 96px;
+}
+
+.archive-head {
+	padding-bottom: 20px;
+	border-bottom: 1px solid var(--rule);
+	margin-bottom: 0;
+}
+
+.archive-title {
+	font-family: var(--f-ui);
+	font-size: 13px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	color: var(--accent);
+	margin: 0;
+}
+
+.load-more {
+	padding: 32px 0;
+	text-align: center;
+}
+
+/* ══════════════════════════════════════
+   QUESTION PAGE
+   ══════════════════════════════════════ */
+
+.question-page {
+	margin-bottom: 96px;
+}
+
+.question-page-back {
+	margin-bottom: 28px;
+}
+
+.back-link {
+	font-family: var(--f-mono);
+	font-size: 11px;
+	letter-spacing: 0.06em;
+	color: var(--muted);
+	text-decoration: none;
+	display: inline-block;
+}
+
+.back-link:hover {
+	color: var(--ink);
+}
+
+/* ══════════════════════════════════════
+   QUESTION NAV (prev / next)
+   ══════════════════════════════════════ */
+
+.question-nav {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 24px;
+	padding-top: 32px;
+	border-top: 1px solid var(--rule);
+	margin-top: 40px;
+}
+
+.question-nav-item {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	text-decoration: none;
+}
+
+.question-nav-item--next {
+	text-align: right;
+	align-items: flex-end;
+}
+
+.question-nav-dir {
+	font-family: var(--f-mono);
+	font-size: 10px;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--muted);
+}
+
+.question-nav-title {
+	font-family: var(--f-ui);
+	font-size: 15px;
+	font-weight: 500;
+	line-height: 1.35;
+	letter-spacing: -0.01em;
+	color: var(--ink);
+}
+
+.question-nav-item:hover .question-nav-title {
+	color: var(--accent);
+}
+
+/* ══════════════════════════════════════
+   FURTHER READING
+   ══════════════════════════════════════ */
+
+.further-reading {
+	margin-top: 40px;
+}
+
+.further-reading-head {
+	font-family: var(--f-ui);
+	font-size: 13px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	color: var(--accent);
+	margin: 0 0 0;
+	padding-bottom: 18px;
+	border-bottom: 1px solid var(--rule);
+}
+
+.further-reading-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+ul.further-reading-list li {
+	border-bottom: 1px solid var(--rule);
+}
+
+.further-reading-list a {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 24px;
+	padding: 18px 0;
+	text-decoration: none;
+}
+
+.further-reading-label {
+	font-family: var(--f-ui);
+	font-size: 16px;
+	color: var(--ink);
+	letter-spacing: -0.005em;
+	line-height: 1.35;
+}
+
+.further-reading-list a:hover .further-reading-label {
+	color: var(--accent);
+}
+
+.further-reading-source {
+	font-family: var(--f-mono);
+	font-size: 10px;
+	color: var(--muted);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	white-space: nowrap;
+	flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════
    DARK MODE
    ══════════════════════════════════════ */
 
@@ -825,5 +990,18 @@ ul.qlist a:hover {
 
 	.subscribe-form {
 		flex-direction: column;
+	}
+
+	.archive {
+		margin-bottom: 48px;
+	}
+
+	.question-page {
+		margin-bottom: 48px;
+	}
+
+	.further-reading-list a {
+		flex-direction: column;
+		gap: 6px;
 	}
 }
