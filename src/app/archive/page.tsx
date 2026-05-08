@@ -1,4 +1,7 @@
-import { ARCHIVE_PAGE_SIZE, QuestionList } from '@/components/QuestionList';
+export const revalidate = 3600;
+
+import { QuestionList } from '@/components/QuestionList';
+import { ARCHIVE_PAGE_SIZE } from '@/lib/config';
 import { getRecentQuestions } from '@/lib/data';
 
 export default async function ArchivePage() {
@@ -9,9 +12,13 @@ export default async function ArchivePage() {
 	return (
 		<div className="archive">
 			<div className="archive-head">
-				<h1 className="archive-title">All questions</h1>
+				<h1 className="archive-title">Question Archive</h1>
 			</div>
-			<QuestionList initial={questions} initialCursor={nextCursor} />
+			<QuestionList
+				initial={questions}
+				initialCursor={nextCursor}
+				pageSize={ARCHIVE_PAGE_SIZE}
+			/>
 		</div>
 	);
 }

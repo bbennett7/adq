@@ -1,17 +1,24 @@
+export const revalidate = 3600;
+
 import Link from 'next/link';
 import { QuestionCard } from '@/components/QuestionCard';
 import { RecentQuestions } from '@/components/RecentQuestions';
-import { getLatestQuestion, getRecentQuestions } from '@/lib/data';
+import { HOME_PREVIEW_SIZE } from '@/lib/config';
+import { getRecentQuestions } from '@/lib/data';
 
 export default async function Home() {
-	const [today, { questions }] = await Promise.all([
-		getLatestQuestion(),
-		getRecentQuestions({ limit: 8 }),
-	]);
+	const { questions } = await getRecentQuestions({ limit: HOME_PREVIEW_SIZE + 1 });
+	const [today, ...recent] = questions;
 
 	return (
 		<>
-			<QuestionCard data={today} />
+			{today ? (
+				<QuestionCard data={today} />
+			) : (
+				<div className="feature feature--empty">
+					<p>No question today — check back tomorrow.</p>
+				</div>
+			)}
 
 			<div className="columns">
 				<div>
@@ -21,7 +28,7 @@ export default async function Home() {
 							All →
 						</Link>
 					</div>
-					<RecentQuestions items={questions} />
+					<RecentQuestions items={recent} />
 				</div>
 
 				<div>
