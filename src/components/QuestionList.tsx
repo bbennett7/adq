@@ -2,19 +2,19 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { Button } from '@/components/Button';
 import { fetchQuestions } from '@/lib/api';
 import { routes } from '@/lib/routes';
 import type { Question } from '@/lib/schemas';
-import { Button } from './Button';
-
-export const ARCHIVE_PAGE_SIZE = 25;
 
 export function QuestionList({
 	initial,
 	initialCursor,
+	pageSize,
 }: {
 	initial: Question[];
 	initialCursor: number | null;
+	pageSize: number;
 }) {
 	const [questions, setQuestions] = useState(initial);
 	const [cursor, setCursor] = useState(initialCursor);
@@ -26,7 +26,7 @@ export function QuestionList({
 		setLoading(true);
 		setError(null);
 		try {
-			const page = await fetchQuestions({ limit: ARCHIVE_PAGE_SIZE, cursor });
+			const page = await fetchQuestions({ limit: pageSize, cursor });
 			setQuestions((prev) => [...prev, ...page.questions]);
 			setCursor(page.nextCursor);
 		} catch {
