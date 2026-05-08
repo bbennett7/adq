@@ -2,6 +2,10 @@
 
 A personal AI-education publication. One foundational AI question, one answer, every weekday.
 
+## This is NOT the Next.js you know
+
+This project uses Next.js 16 (App Router). APIs, conventions, and file structure may differ from training data. Read `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+
 ## Stack
 
 - **Framework:** Next.js 16 (App Router)
