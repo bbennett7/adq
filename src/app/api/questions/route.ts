@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import { NextResponse } from 'next/server';
 import { getRecentQuestions } from '@/lib/data';
 import { QuestionsQuerySchema } from '@/lib/schemas';
@@ -19,7 +21,5 @@ export async function GET(request: Request) {
 	}
 
 	const page = await getRecentQuestions(parsed.data);
-	return NextResponse.json(page, {
-		headers: { 'Cache-Control': 's-maxage=60, stale-while-revalidate=300' },
-	});
+	return NextResponse.json(page);
 }

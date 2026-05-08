@@ -1,5 +1,4 @@
-export const revalidate = 3600;
-
+import { cacheLife } from 'next/cache';
 import Link from 'next/link';
 import { QuestionCard } from '@/components/QuestionCard';
 import { RecentQuestions } from '@/components/RecentQuestions';
@@ -7,6 +6,8 @@ import { HOME_PREVIEW_SIZE } from '@/lib/config';
 import { getRecentQuestions } from '@/lib/data';
 
 export default async function Home() {
+	'use cache';
+	cacheLife('hours');
 	const { questions } = await getRecentQuestions({
 		limit: HOME_PREVIEW_SIZE + 1,
 	});
