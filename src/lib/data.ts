@@ -2,8 +2,9 @@ import { cache } from 'react';
 import type { Question, QuestionsPage } from './schemas';
 import { stubRecent, stubToday } from './stub-data';
 
-export const getLatestQuestion = cache(async (): Promise<Question> => {
-	// TODO: query most recent published, non-deleted question where publishedAt <= now and deletedAt IS NULL
+export const getLatestQuestion = cache(async (): Promise<Question | null> => {
+	// TODO: SELECT * FROM questions WHERE deletedAt IS NULL ORDER BY number DESC LIMIT 1
+	// Returns the most recent published question regardless of date — null only if DB is empty.
 	return stubToday;
 });
 
@@ -24,9 +25,15 @@ export const getAdjacentQuestions = cache(
 		const sorted = [...stubRecent].sort((a, b) => a.number - b.number);
 		const prev = sorted.findLast((q) => q.number < number) ?? null;
 		const next = sorted.find((q) => q.number > number) ?? null;
+
 		return { prev, next };
 	},
 );
+
+export const getAllQuestions = cache(async (): Promise<Question[]> => {
+	// TODO: SELECT number FROM questions WHERE deletedAt IS NULL ORDER BY number ASC
+	return [...stubRecent].sort((a, b) => a.number - b.number);
+});
 
 export const getRecentQuestions = cache(
 	async (params: {
