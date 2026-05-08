@@ -7,7 +7,9 @@ import { HOME_PREVIEW_SIZE } from '@/lib/config';
 import { getRecentQuestions } from '@/lib/data';
 
 export default async function Home() {
-	const { questions } = await getRecentQuestions({ limit: HOME_PREVIEW_SIZE + 1 });
+	const { questions } = await getRecentQuestions({
+		limit: HOME_PREVIEW_SIZE + 1,
+	});
 	const [today, ...recent] = questions;
 
 	return (

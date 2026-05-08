@@ -19,5 +19,7 @@ export async function GET(request: Request) {
 	}
 
 	const page = await getRecentQuestions(parsed.data);
-	return NextResponse.json(page);
+	return NextResponse.json(page, {
+		headers: { 'Cache-Control': 's-maxage=60, stale-while-revalidate=300' },
+	});
 }
