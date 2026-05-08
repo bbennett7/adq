@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import { NextResponse } from 'next/server';
 import { getRecentQuestions } from '@/lib/data';
 import { QuestionsQuerySchema } from '@/lib/schemas';

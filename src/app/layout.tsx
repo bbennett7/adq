@@ -74,7 +74,7 @@ export default function RootLayout({
 							<Link href="/archive">Archive</Link>
 							<span className="site-header-nav-disabled">Field Notes</span>
 							<span className="site-header-nav-disabled">Resources</span>
-							<span className="site-header-nav-disabled">About</span>
+							<Link href="/about">About</Link>
 						</nav>
 					</div>
 				</header>
@@ -92,6 +92,7 @@ export default function RootLayout({
 							<div className="site-footer-tagline">
 								One question · One answer · Every weekday
 							</div>
+							<div className="site-footer-tagline">by Bryn Bennett</div>
 						</div>
 						<div className="site-footer-right">
 							<a

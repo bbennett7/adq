@@ -1,6 +1,12 @@
+import type { Components } from 'react-markdown';
 import ReactMarkdown from 'react-markdown';
 import rehypeSanitize from 'rehype-sanitize';
 import type { Question } from '@/lib/schemas';
+
+const REHYPE_PLUGINS = [rehypeSanitize];
+const QUESTION_COMPONENTS: Components = {
+	p: ({ children }) => <h1>{children}</h1>,
+};
 
 export function QuestionCard({ data }: { data: Question }) {
 	const num = String(data.number).padStart(3, '0');
@@ -17,21 +23,20 @@ export function QuestionCard({ data }: { data: Question }) {
 				<span>
 					<b>{published}</b> &nbsp;·&nbsp; no. {num}
 				</span>
-				<span />
 			</div>
 			<div className="feature-body">
 				<div className="feature-q">
 					<span className="label">Question</span>
 					<ReactMarkdown
-						rehypePlugins={[rehypeSanitize]}
-						components={{ p: ({ children }) => <h1>{children}</h1> }}
+						rehypePlugins={REHYPE_PLUGINS}
+						components={QUESTION_COMPONENTS}
 					>
 						{data.questionMd}
 					</ReactMarkdown>
 				</div>
 				<div className="feature-a">
 					<span className="label">Answer</span>
-					<ReactMarkdown rehypePlugins={[rehypeSanitize]}>
+					<ReactMarkdown rehypePlugins={REHYPE_PLUGINS}>
 						{data.answerMd}
 					</ReactMarkdown>
 				</div>
