@@ -16,7 +16,9 @@ export function ThemeToggle() {
 		const prefersDark = window.matchMedia(
 			'(prefers-color-scheme: dark)',
 		).matches;
-		setTheme(stored ?? (prefersDark ? 'dark' : 'light'));
+		const resolved = stored ?? (prefersDark ? 'dark' : 'light');
+		document.documentElement.dataset.theme = resolved;
+		setTheme(resolved);
 	}, []);
 
 	function toggle() {
@@ -26,7 +28,16 @@ export function ThemeToggle() {
 		localStorage.setItem('theme', next);
 	}
 
-	if (theme === null) return null;
+	if (theme === null) {
+		return (
+			<button
+				type="button"
+				className="site-footer-theme-toggle"
+				tabIndex={-1}
+				style={{ visibility: 'hidden' }}
+			/>
+		);
+	}
 
 	return (
 		<button
