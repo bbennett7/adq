@@ -366,6 +366,7 @@ main {
 	color: var(--ink);
 }
 .site-header-nav-disabled {
+	color: var(--accent);
 	opacity: 0.25;
 	cursor: default;
 }
@@ -941,6 +942,58 @@ ul.resource-links-list li {
 }
 
 /* ══════════════════════════════════════
+   ABOUT PAGE
+   ══════════════════════════════════════ */
+
+.about-page {
+	margin-bottom: 96px;
+}
+
+.about-section {
+	display: grid;
+	grid-template-columns: 180px 1fr;
+	gap: 48px;
+	padding: 56px 0;
+	border-top: 1px solid var(--rule);
+	border-bottom: 1px solid var(--rule);
+}
+
+.about-section-label {
+	padding-top: 3px;
+}
+
+.about-section-head {
+	font-family: var(--f-ui);
+	font-size: 13px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	color: var(--accent);
+	margin: 0;
+}
+
+.about-section-content {
+	max-width: 560px;
+}
+
+.about-prose p {
+	font-family: var(--f-body);
+	font-size: 19px;
+	line-height: 1.6;
+	color: var(--ink-soft);
+	margin: 0 0 22px;
+}
+
+.about-prose p:last-child {
+	margin-bottom: 0;
+}
+
+.about-prose em {
+	font-style: italic;
+	color: var(--ink);
+}
+
+/* ══════════════════════════════════════
    MOBILE
    ══════════════════════════════════════ */
 
@@ -1013,5 +1066,15 @@ ul.resource-links-list li {
 	.resource-links-list a {
 		flex-direction: column;
 		gap: 6px;
+	}
+
+	.about-page {
+		margin-bottom: 48px;
+	}
+
+	.about-section {
+		grid-template-columns: 1fr;
+		gap: 20px;
+		padding: 40px 0;
 	}
 }
