@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { routes } from '@/lib/routes';
-import type { Question } from '@/lib/schemas';
+import type { PublishedQuestion } from '@/lib/schemas';
 
 function isYesterdayUtc(dateStr: string): boolean {
 	const now = new Date();
@@ -15,7 +15,7 @@ function isYesterdayUtc(dateStr: string): boolean {
 	);
 }
 
-export function RecentQuestions({ items }: { items: Question[] }) {
+export function RecentQuestions({ items }: { items: PublishedQuestion[] }) {
 	if (!items.length) return null;
 
 	const [first, ...rest] = items;

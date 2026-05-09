@@ -5,14 +5,14 @@ import { useState } from 'react';
 import { Button } from '@/components/Button';
 import { fetchQuestions } from '@/lib/api';
 import { routes } from '@/lib/routes';
-import type { Question } from '@/lib/schemas';
+import type { PublishedQuestion } from '@/lib/schemas';
 
 export function QuestionList({
 	initial,
 	initialCursor,
 	pageSize,
 }: {
-	initial: Question[];
+	initial: PublishedQuestion[];
 	initialCursor: number | null;
 	pageSize: number;
 }) {
