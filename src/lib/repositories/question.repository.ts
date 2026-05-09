@@ -1,6 +1,5 @@
 import { sql } from 'drizzle-orm';
 import { db } from '@/lib/db';
-import { questions } from '@/lib/schema';
 import type { PublishedQuestion, PublishedQuestionsPage } from '@/lib/schemas';
 import { PublishedQuestionSchema } from '@/lib/schemas';
 
@@ -55,7 +54,7 @@ export class QuestionRepository {
 				and(
 					eq(q.number, number),
 					isNotNull(q.publishedAt),
-					sql`${questions.publishedAt} <= now()`,
+					sql`${q.publishedAt} <= now()`,
 					isNull(q.deletedAt),
 				),
 			with: {
@@ -79,7 +78,7 @@ export class QuestionRepository {
 					and(
 						lt(q.number, number),
 						isNotNull(q.publishedAt),
-						sql`${questions.publishedAt} <= now()`,
+						sql`${q.publishedAt} <= now()`,
 						isNull(q.deletedAt),
 					),
 				orderBy: (q, { desc }) => desc(q.number),
@@ -96,7 +95,7 @@ export class QuestionRepository {
 					and(
 						gt(q.number, number),
 						isNotNull(q.publishedAt),
-						sql`${questions.publishedAt} <= now()`,
+						sql`${q.publishedAt} <= now()`,
 						isNull(q.deletedAt),
 					),
 				orderBy: (q, { asc }) => asc(q.number),
@@ -124,7 +123,7 @@ export class QuestionRepository {
 			where: (q, { and, isNotNull, isNull, lt }) =>
 				and(
 					isNotNull(q.publishedAt),
-					sql`${questions.publishedAt} <= now()`,
+					sql`${q.publishedAt} <= now()`,
 					isNull(q.deletedAt),
 					cursor !== undefined ? lt(q.number, cursor) : undefined,
 				),
