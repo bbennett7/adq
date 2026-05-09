@@ -1,5 +1,5 @@
-import type { QuestionsPage } from './schemas';
-import { ApiErrorSchema, QuestionsPageSchema } from './schemas';
+import type { PublishedQuestionsPage } from './schemas';
+import { ApiErrorSchema, PublishedQuestionsPageSchema } from './schemas';
 
 async function apiFetch(url: string, options?: RequestInit): Promise<Response> {
 	const res = await fetch(url, options);
@@ -16,11 +16,11 @@ async function apiFetch(url: string, options?: RequestInit): Promise<Response> {
 export async function fetchQuestions(params: {
 	limit?: number;
 	cursor?: number;
-}): Promise<QuestionsPage> {
+}): Promise<PublishedQuestionsPage> {
 	const search = new URLSearchParams();
 	if (params.limit !== undefined) search.set('limit', String(params.limit));
 	if (params.cursor !== undefined) search.set('cursor', String(params.cursor));
 
 	const res = await apiFetch(`/api/questions?${search}`);
-	return QuestionsPageSchema.parse(await res.json());
+	return PublishedQuestionsPageSchema.parse(await res.json());
 }

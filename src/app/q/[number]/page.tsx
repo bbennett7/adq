@@ -1,16 +1,10 @@
-export const dynamicParams = false;
-
+import { cacheLife } from 'next/cache';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { QuestionCard } from '@/components/QuestionCard';
 import { ResourceLinks } from '@/components/ResourceLinks';
-import { getAdjacentQuestions, getAllQuestions, getQuestion } from '@/lib/data';
 import { routes } from '@/lib/routes';
-
-export async function generateStaticParams() {
-	const questions = await getAllQuestions();
-	return questions.map((q) => ({ number: String(q.number) }));
-}
+import { questionService } from '@/lib/services/question.service';
 
 type Params = { params: Promise<{ number: string }> };
 
@@ -20,24 +14,31 @@ function parseQuestionNumber(raw: string): number | null {
 }
 
 export async function generateMetadata({ params }: Params) {
+	'use cache';
+	cacheLife('days');
+
 	const { number } = await params;
 	const n = parseQuestionNumber(number);
 	if (!n) return {};
-	const question = await getQuestion(n);
+
+	const question = await questionService.getQuestion(n);
 	if (!question) return {};
 	return { title: question.questionPt, description: question.questionPt };
 }
 
 export default async function QuestionPage({ params }: Params) {
+	'use cache';
+	cacheLife('days');
+
 	const { number } = await params;
 	const n = parseQuestionNumber(number);
 
 	if (!n) notFound();
 
-	const question = await getQuestion(n);
+	const question = await questionService.getQuestion(n);
 	if (!question) notFound();
 
-	const { prev, next } = await getAdjacentQuestions(n);
+	const { prev, next } = await questionService.getAdjacentQuestions(n);
 
 	return (
 		<div className="question-page">
