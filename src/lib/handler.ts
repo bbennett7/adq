@@ -23,10 +23,7 @@ export function withErrorHandling<Args extends unknown[]>(
 
 			if (err instanceof ZodError) {
 				console.error(err);
-				return NextResponse.json(
-					{ error: 'Invalid request body' },
-					{ status: 400 },
-				);
+				return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
 			}
 
 			console.error(err);

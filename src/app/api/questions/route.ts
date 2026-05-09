@@ -1,28 +1,21 @@
 import { NextResponse } from 'next/server';
+import { withErrorHandling } from '@/lib/handler';
 import { QuestionsQuerySchema } from '@/lib/schemas';
 import { questionService } from '@/lib/services/question.service';
 
 export const revalidate = 60;
 
-export async function GET(request: Request) {
+export const GET = withErrorHandling(async (request) => {
 	const { searchParams } = new URL(request.url);
 
-	const parsed = QuestionsQuerySchema.safeParse({
+	const query = QuestionsQuerySchema.parse({
 		limit: searchParams.get('limit') ?? undefined,
 		cursor: searchParams.get('cursor') ?? undefined,
 	});
 
-	if (!parsed.success) {
-		console.error('Invalid query parameters', parsed.error.issues);
-		return NextResponse.json(
-			{ error: 'Invalid query parameters' },
-			{ status: 400 },
-		);
-	}
-
 	const page = await questionService.getRecentQuestions(
-		parsed.data.limit,
-		parsed.data.cursor,
+		query.limit,
+		query.cursor,
 	);
 	return NextResponse.json(page);
-}
+});
