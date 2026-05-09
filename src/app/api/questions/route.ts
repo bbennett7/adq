@@ -1,8 +1,8 @@
-export const revalidate = 60;
-
 import { NextResponse } from 'next/server';
-import { getRecentQuestions } from '@/lib/data';
 import { QuestionsQuerySchema } from '@/lib/schemas';
+import { questionService } from '@/lib/services/question.service';
+
+export const revalidate = 60;
 
 export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url);
@@ -20,6 +20,9 @@ export async function GET(request: Request) {
 		);
 	}
 
-	const page = await getRecentQuestions(parsed.data);
+	const page = await questionService.getRecentQuestions(
+		parsed.data.limit,
+		parsed.data.cursor,
+	);
 	return NextResponse.json(page);
 }

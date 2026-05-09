@@ -1,14 +1,14 @@
 import { cacheLife } from 'next/cache';
 import { QuestionList } from '@/components/QuestionList';
 import { ARCHIVE_PAGE_SIZE } from '@/lib/config';
-import { getRecentQuestions } from '@/lib/data';
+import { questionService } from '@/lib/services/question.service';
 
 export default async function ArchivePage() {
 	'use cache';
 	cacheLife('hours');
-	const { questions, nextCursor } = await getRecentQuestions({
-		limit: ARCHIVE_PAGE_SIZE,
-	});
+
+	const { questions, nextCursor } =
+		await questionService.getRecentQuestions(ARCHIVE_PAGE_SIZE);
 
 	return (
 		<div className="archive">
