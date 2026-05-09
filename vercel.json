@@ -1,0 +1,10 @@
+{
+	"env": {
+		"DATABASE_URL": {
+			"required": true
+		},
+		"REVALIDATION_SECRET": {
+			"required": true
+		}
+	}
+}

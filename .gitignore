@@ -29,6 +29,9 @@ yarn-error.log*
 # Vercel
 .vercel
 
+# Override global *.sql ignore so migration files are tracked
+!migrations/*.sql
+
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
