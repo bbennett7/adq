@@ -80,12 +80,17 @@ async function apiFetch(url: string, options?: RequestInit): Promise<Response> {
 ### Prevention
 All client-side fetches go through `apiFetch`. Raw `fetch()` calls with manual `res.ok` checks outside `src/lib/api.ts` are a code smell and should be flagged in review.
 
+> **See also:** For centralized error handling in *route handlers* (server side), see [Drizzle ORM + Neon Data Layer — §5](../best-practices/drizzle-orm-neon-data-layer-nextjs-2026-05-09.md) — the `AppError` hierarchy and `withErrorHandling` HOF.
+
 ---
 
 ## 3. Caching in Next.js 16 App Router
 
 ### Root Cause
 Next.js 16 introduced the `'use cache'` directive as the preferred caching primitive, replacing the older `export const revalidate` route segment config. Silence means "dynamic by default" — not "cached."
+
+### Prerequisite: `cacheComponents: true` in `next.config.ts`
+The `'use cache'` directive requires `cacheComponents: true` in `next.config.ts`. This is a **Next.js 16** option — it replaces `experimental.dynamicIO` from Next.js 15; using the old key has no effect. See [Drizzle ORM + Neon Data Layer — §6](../best-practices/drizzle-orm-neon-data-layer-nextjs-2026-05-09.md) for the full config and migration notes.
 
 ### Preferred Approach: `'use cache'` Directive (Next.js 16)
 Add `'use cache'` at the top of a file, component, or async function:

@@ -57,3 +57,7 @@ Three-part span structure — do not change the class names:
 | `/notes/[slug]` | Individual field note |
 | `/about` | About page |
 | `/start` | Getting started / subscribe |
+
+## Solutions
+
+`docs/solutions/` contains documented fixes, patterns, and architectural decisions organized by category (e.g. `best-practices/`, `integration-issues/`). Each file has YAML frontmatter with `module`, `tags`, and `problem_type` fields for filtering. Relevant when implementing features or debugging in a documented area.
