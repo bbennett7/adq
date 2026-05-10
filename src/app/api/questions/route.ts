@@ -3,8 +3,6 @@ import { withErrorHandling } from '@/lib/handler';
 import { QuestionsQuerySchema } from '@/lib/schemas';
 import { questionService } from '@/lib/services/question.service';
 
-export const revalidate = 60;
-
 export const GET = withErrorHandling(async (request) => {
 	const { searchParams } = new URL(request.url);
 
