@@ -1,13 +1,13 @@
-import { cacheLife } from 'next/cache';
 import Link from 'next/link';
+import { connection } from 'next/server';
+import { Suspense } from 'react';
 import { QuestionCard } from '@/components/QuestionCard';
 import { RecentQuestions } from '@/components/RecentQuestions';
 import { HOME_PREVIEW_SIZE } from '@/lib/config';
 import { questionService } from '@/lib/services/question.service';
 
-export default async function Home() {
-	'use cache';
-	cacheLife('hours');
+async function HomeContent() {
+	await connection();
 	const { questions } = await questionService.getRecentQuestions(
 		HOME_PREVIEW_SIZE + 1,
 	);
@@ -48,5 +48,13 @@ export default async function Home() {
 				</div>
 			</div>
 		</>
+	);
+}
+
+export default function Home() {
+	return (
+		<Suspense>
+			<HomeContent />
+		</Suspense>
 	);
 }
