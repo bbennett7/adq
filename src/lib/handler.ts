@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { ZodError } from 'zod/v4';
+import { ZodError } from 'zod';
 import { AppError } from '@/lib/api-error';
 import { logger } from '@/lib/logger';
 

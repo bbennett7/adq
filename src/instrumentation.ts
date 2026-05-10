@@ -3,7 +3,7 @@ import { logger } from '@/lib/logger';
 
 export function register() {}
 
-export const onRequestError: Instrumentation.onRequestError = (
+export const onRequestError: Instrumentation.onRequestError = async (
 	err,
 	request,
 	context,
