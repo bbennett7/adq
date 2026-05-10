@@ -5,4 +5,5 @@ import * as schema from '@/lib/schema';
 const url = process.env.DATABASE_URL;
 if (!url) throw new Error('DATABASE_URL env var is required');
 
-export const db = drizzle(neon(url), { schema });
+export const sql = neon(url);
+export const db = drizzle(sql, { schema });
