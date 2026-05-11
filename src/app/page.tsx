@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { connection } from 'next/server';
 import { Suspense } from 'react';
 import { QuestionCard } from '@/components/QuestionCard';
+import { QuestionCardEmpty } from '@/components/QuestionCardEmpty';
 import { RecentQuestions } from '@/components/RecentQuestions';
 import { HOME_PREVIEW_SIZE } from '@/lib/config';
 import { questionService } from '@/lib/services/question.service';
@@ -18,9 +19,7 @@ async function HomeContent() {
 			{today ? (
 				<QuestionCard data={today} />
 			) : (
-				<div className="feature feature--empty">
-					<p>No question today — check back tomorrow.</p>
-				</div>
+				<QuestionCardEmpty variant="empty" />
 			)}
 
 			<div className="columns">
