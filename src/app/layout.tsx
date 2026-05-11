@@ -1,43 +1,24 @@
 import type { Metadata } from 'next';
-import {
-	DM_Mono,
-	Inter_Tight,
-	Libre_Franklin,
-	Newsreader,
-} from 'next/font/google';
 import Link from 'next/link';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import './globals.css';
 
-const libreFranklin = Libre_Franklin({
-	variable: '--font-libre-franklin',
-	subsets: ['latin'],
-	weight: ['300', '400', '700'],
-});
-
-const newsreader = Newsreader({
-	variable: '--font-newsreader',
-	subsets: ['latin'],
-	weight: ['400', '500'],
-	style: ['normal', 'italic'],
-});
-
-const interTight = Inter_Tight({
-	variable: '--font-inter-tight',
-	subsets: ['latin'],
-	weight: ['400', '500', '600'],
-	style: ['normal', 'italic'],
-});
-
-const dmMono = DM_Mono({
-	variable: '--font-dm-mono',
-	subsets: ['latin'],
-	weight: ['400', '500'],
-});
-
 export const metadata: Metadata = {
 	title: 'askdumbquestions.ai',
 	description: 'One question. One answer. Every weekday.',
+	metadataBase: new URL('https://askdumbquestions.ai'),
+	openGraph: {
+		title: 'askdumbquestions.ai',
+		description: 'One question. One answer. Every weekday.',
+		url: 'https://askdumbquestions.ai',
+		siteName: 'askdumbquestions.ai',
+		type: 'website',
+	},
+	twitter: {
+		card: 'summary_large_image',
+		title: 'askdumbquestions.ai',
+		description: 'One question. One answer. Every weekday.',
+	},
 };
 
 const themeScript = `(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;})();`;
@@ -48,27 +29,31 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html
-			lang="en"
-			className={`${libreFranklin.variable} ${newsreader.variable} ${interTight.variable} ${dmMono.variable}`}
-			suppressHydrationWarning
-		>
+		<html lang="en" suppressHydrationWarning>
 			<head>
 				{/* biome-ignore lint/security/noDangerouslySetInnerHtml: FOUC-prevention script must run before paint */}
 				<script dangerouslySetInnerHTML={{ __html: themeScript }} />
+				<link rel="preconnect" href="https://fonts.googleapis.com" />
+				<link
+					rel="preconnect"
+					href="https://fonts.gstatic.com"
+					crossOrigin=""
+				/>
+				<link
+					href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Elms+Sans:wght@400;500;600;700&family=Fanwood+Text:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap"
+					rel="stylesheet"
+				/>
 			</head>
-			<body className="flex flex-col min-h-full">
+			<body>
 				<header className="site-header">
 					<div className="site-header-inner wrap">
 						<div className="site-header-counter">
 							{/* TODO: wire to live count query when DB is connected */}
-							<b>142</b> answered &nbsp;·&nbsp; <span className="inf">∞</span>{' '}
+							<b>142</b> answered &nbsp;·&nbsp; <b className="counter-inf">∞</b>{' '}
 							remaining
 						</div>
-						<Link href="/" className="wordmark">
-							<span className="wordmark-pre">ask</span>
-							<span className="wordmark-core">dumbquestions</span>
-							<span className="wordmark-tld">.ai</span>
+						<Link href="/" className="wordmark wordmark--nav">
+							askdumbquestions.ai
 						</Link>
 						<nav className="site-header-nav">
 							<Link href="/archive">Archive</Link>
@@ -79,15 +64,13 @@ export default function RootLayout({
 					</div>
 				</header>
 
-				<main className="wrap flex-1">{children}</main>
+				<main className="wrap">{children}</main>
 
 				<footer className="site-footer">
 					<div className="wrap site-footer-inner">
 						<div>
-							<Link href="/" className="site-footer-brand wordmark">
-								<span className="wordmark-pre">ask</span>
-								<span className="wordmark-core">dumbquestions</span>
-								<span className="wordmark-tld">.ai</span>
+							<Link href="/" className="site-footer-wordmark">
+								askdumbquestions.ai
 							</Link>
 							<div className="site-footer-tagline">
 								One question · One answer · Every weekday

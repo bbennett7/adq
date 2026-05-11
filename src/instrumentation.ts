@@ -9,17 +9,21 @@ export const onRequestError: Instrumentation.onRequestError = async (
 	context,
 ) => {
 	if (process.env.NEXT_RUNTIME === 'edge') return;
-	const error = err as Error & { digest?: string };
+	const message = err instanceof Error ? err.message : String(err);
+	const digest =
+		err instanceof Error && 'digest' in err
+			? (err as { digest?: string }).digest
+			: undefined;
 	logger.error(
 		{
 			type: 'InstrumentationError',
-			digest: error.digest,
+			digest,
 			method: request.method,
 			path: request.path,
 			routerKind: context.routerKind,
 			routeType: context.routeType,
 			routePath: context.routePath,
 		},
-		error.message,
+		message,
 	);
 };
