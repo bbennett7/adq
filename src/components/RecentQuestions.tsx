@@ -16,7 +16,9 @@ function isYesterdayUtc(dateStr: string): boolean {
 }
 
 export function RecentQuestions({ items }: { items: PublishedQuestion[] }) {
-	if (!items.length) return null;
+	if (!items.length) {
+		return <p className="notes-empty">No recent questions yet.</p>;
+	}
 
 	const [first, ...rest] = items;
 	const firstLabel = isYesterdayUtc(first.publishedAt)
@@ -29,10 +31,10 @@ export function RecentQuestions({ items }: { items: PublishedQuestion[] }) {
 
 	return (
 		<>
-			<div className="featured-recent">
+			<Link href={routes.question(first.number)} className="featured-recent">
 				<div className="day">{firstLabel}</div>
 				<h3>{first.questionPt}</h3>
-			</div>
+			</Link>
 
 			<ul className="qlist">
 				{rest.map((item) => (
