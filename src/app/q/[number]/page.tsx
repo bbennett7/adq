@@ -1,6 +1,7 @@
-import { cacheLife } from 'next/cache';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { connection } from 'next/server';
+import { Suspense } from 'react';
 import { QuestionCard } from '@/components/QuestionCard';
 import { ResourceLinks } from '@/components/ResourceLinks';
 import { routes } from '@/lib/routes';
@@ -14,9 +15,6 @@ function parseQuestionNumber(raw: string): number | null {
 }
 
 export async function generateMetadata({ params }: Params) {
-	'use cache';
-	cacheLife('days');
-
 	const { number } = await params;
 	const n = parseQuestionNumber(number);
 	if (!n) return {};
@@ -26,13 +24,14 @@ export async function generateMetadata({ params }: Params) {
 	return { title: question.questionPt, description: question.questionPt };
 }
 
-export default async function QuestionPage({ params }: Params) {
-	'use cache';
-	cacheLife('days');
-
+async function QuestionContent({
+	params,
+}: {
+	params: Promise<{ number: string }>;
+}) {
+	await connection();
 	const { number } = await params;
 	const n = parseQuestionNumber(number);
-
 	if (!n) notFound();
 
 	const question = await questionService.getQuestion(n);
@@ -41,12 +40,7 @@ export default async function QuestionPage({ params }: Params) {
 	const { prev, next } = await questionService.getAdjacentQuestions(n);
 
 	return (
-		<div className="question-page">
-			<div className="question-page-back">
-				<Link href={routes.archive} className="back-link">
-					← All questions
-				</Link>
-			</div>
+		<>
 			<QuestionCard data={question} />
 			{question.resources && <ResourceLinks links={question.resources} />}
 			{(prev || next) && (
@@ -75,6 +69,21 @@ export default async function QuestionPage({ params }: Params) {
 					</div>
 				</nav>
 			)}
+		</>
+	);
+}
+
+export default function QuestionPage({ params }: Params) {
+	return (
+		<div className="question-page">
+			<div className="question-page-back">
+				<Link href={routes.archive} className="back-link">
+					← All questions
+				</Link>
+			</div>
+			<Suspense>
+				<QuestionContent params={params} />
+			</Suspense>
 		</div>
 	);
 }

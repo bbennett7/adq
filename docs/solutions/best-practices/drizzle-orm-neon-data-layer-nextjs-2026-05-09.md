@@ -193,26 +193,33 @@ export class NotFoundError extends AppError {
 ```ts
 // src/lib/handler.ts
 import { NextResponse } from 'next/server';
-import { ZodError } from 'zod/v4';
+import { ZodError } from 'zod';
 import { AppError } from '@/lib/api-error';
+import { logger } from '@/lib/logger';
 
 export function withErrorHandling<Args extends unknown[]>(
   handler: (request: Request, ...args: Args) => Promise<NextResponse>,
 ): (request: Request, ...args: Args) => Promise<NextResponse> {
   return async (request, ...args) => {
+    const ctx = { method: request.method, path: new URL(request.url).pathname };
     try {
       return await handler(request, ...args);
     } catch (err) {
       if (err instanceof AppError) {
-        if (err.cause) console.error(err, err.cause);
-        else console.error(err);
+        logger.error(
+          { ...ctx, status: err.status, type: err.name, cause: err.cause instanceof Error ? err.cause : undefined },
+          err.message,
+        );
         return NextResponse.json({ error: err.message }, { status: err.status });
       }
       if (err instanceof ZodError) {
-        console.error(err);
+        logger.error({ ...ctx, type: 'ZodError', issues: err.issues }, 'Invalid request');
         return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
       }
-      console.error(err);
+      logger.error(
+        { ...ctx, type: err instanceof Error ? err.constructor.name : 'UnknownError', err: err instanceof Error ? err : { message: String(err) } },
+        'Internal server error',
+      );
       return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
   };
@@ -236,18 +243,20 @@ const config: NextConfig = {
 
 Place the `'use cache'` directive **inside the function body** (not at the top of the file), combined with `cacheLife()`. For broader `'use cache'` and `cacheLife` patterns, see `docs/solutions/integration-issues/nextjs-16-app-router-patterns.md` §3.
 
-### 7. Environment variable declaration (`vercel.json`)
+### 7. Environment variable validation
 
-Declare all required env vars in `vercel.json` so Vercel surfaces missing config at deploy time rather than at runtime:
+**Do not** use `vercel.json` `env` declarations with `"required": true` — this was a Vercel beta API that was never productionized and has no effect. Vercel ignores it silently.
 
-```json
-{
-  "env": {
-    "DATABASE_URL": { "required": true },
-    "REVALIDATION_SECRET": { "required": true }
-  }
-}
+The correct approach is runtime validation at server startup. The `src/lib/db.ts` module already does this for `DATABASE_URL`:
+
+```ts
+const url = process.env.DATABASE_URL;
+if (!url) throw new Error('DATABASE_URL env var is required');
 ```
+
+For `REVALIDATION_SECRET`, the revalidate route handler validates presence and returns 401 if absent, which is the correct behavior.
+
+Document all required env vars in `.env.local.example` — that file is the source of truth for what variables the app needs.
 
 ---
 
@@ -353,4 +362,3 @@ export const GET = withErrorHandling(async (request) => {
 - `src/lib/request.ts` — `parseJsonBody` helper
 - `migrations/` — SQL migration files (source of truth for DB schema)
 - `next.config.ts` — `cacheComponents: true`
-- `vercel.json` — env var declarations

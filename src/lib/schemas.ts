@@ -1,4 +1,4 @@
-import { z } from 'zod/v4';
+import { z } from 'zod';
 
 export const ResourceLinkSchema = z.object({
 	label: z.string().min(1),
@@ -50,7 +50,7 @@ export const ApiErrorSchema = z.object({
 });
 
 export const RevalidateBodySchema = z.object({
-	paths: z.array(z.string()).default([]),
+	questionNumbers: z.array(z.number().int().positive()).default([]),
 });
 
 export type ResourceLink = z.infer<typeof ResourceLinkSchema>;

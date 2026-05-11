@@ -58,6 +58,10 @@ Three-part span structure — do not change the class names:
 | `/about` | About page |
 | `/start` | Getting started / subscribe |
 
+## Git
+
+Always use the `/commit-review` skill to commit changes. Never run `git commit` or `git push` directly unless explicitly instructed.
+
 ## Solutions
 
 `docs/solutions/` contains documented fixes, patterns, and architectural decisions organized by category (e.g. `best-practices/`, `integration-issues/`). Each file has YAML frontmatter with `module`, `tags`, and `problem_type` fields for filtering. Relevant when implementing features or debugging in a documented area.
