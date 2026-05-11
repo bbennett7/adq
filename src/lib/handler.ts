@@ -17,7 +17,12 @@ export function withErrorHandling<Args extends unknown[]>(
 		} catch (err) {
 			if (err instanceof AppError) {
 				logger.error(
-					{ ...ctx, status: err.status, type: err.name, cause: err.cause },
+					{
+						...ctx,
+						status: err.status,
+						type: err.name,
+						cause: err.cause instanceof Error ? err.cause : undefined,
+					},
 					err.message,
 				);
 				return NextResponse.json(
@@ -35,7 +40,11 @@ export function withErrorHandling<Args extends unknown[]>(
 			}
 
 			logger.error(
-				{ ...ctx, type: 'UnknownError', err },
+				{
+					...ctx,
+					type: err instanceof Error ? err.constructor.name : 'UnknownError',
+					err: err instanceof Error ? err : { message: String(err) },
+				},
 				'Internal server error',
 			);
 			return NextResponse.json(
