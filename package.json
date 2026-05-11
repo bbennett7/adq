@@ -22,6 +22,12 @@
 		"rehype-sanitize": "^6.0.0",
 		"zod": "^4.4.3"
 	},
+	"pnpm": {
+		"overrides": {
+			"esbuild": ">=0.25.0",
+			"postcss": ">=8.5.10"
+		}
+	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.4.14",
 		"@tailwindcss/postcss": "^4",

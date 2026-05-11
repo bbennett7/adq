@@ -1,4 +1,4 @@
-import { revalidatePath } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 import { NextResponse } from 'next/server';
 import { UnauthorizedError } from '@/lib/api-error';
 import { withErrorHandling } from '@/lib/handler';
@@ -18,10 +18,9 @@ export const POST = withErrorHandling(async (request) => {
 
 	const body = RevalidateBodySchema.parse(await parseJsonBody(request));
 
-	revalidatePath('/');
-	revalidatePath('/archive');
-	for (const path of body.paths) {
-		revalidatePath(path);
+	revalidateTag('questions', 'minutes');
+	for (const n of body.questionNumbers) {
+		revalidateTag(`question-${n}`, 'days');
 	}
 
 	return NextResponse.json({ revalidated: true });
