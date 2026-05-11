@@ -8,6 +8,11 @@ async function ArchiveContent() {
 	await connection();
 	const { questions, nextCursor } =
 		await questionService.getRecentQuestions(ARCHIVE_PAGE_SIZE);
+
+	if (!questions.length) {
+		return <p className="notes-empty">No questions yet — check back soon.</p>;
+	}
+
 	return (
 		<QuestionList
 			initial={questions}

@@ -58,6 +58,27 @@ Three-part span structure — do not change the class names:
 | `/about` | About page |
 | `/start` | Getting started / subscribe |
 
+## API Endpoints
+
+| Method | Route | Auth | Description |
+|---|---|---|---|
+| `POST` | `/api/revalidate` | `x-revalidation-secret` header | Purge ISR cache for questions |
+
+### `POST /api/revalidate`
+
+Triggers on-demand ISR revalidation. Used by the Vercel Cron agent after publishing a new question.
+
+**Auth:** Request header `x-revalidation-secret` must match `REVALIDATION_SECRET` env var.
+
+**Body:**
+```json
+{ "questionNumbers": [142] }
+```
+
+**Behavior:** Always revalidates the `questions` tag (recent questions list). Also revalidates `question-{n}` for each number in `questionNumbers`.
+
+**Response:** `{ "revalidated": true }` on success; `401` if secret missing or wrong.
+
 ## Git
 
 Always use the `/commit-review` skill to commit changes. Never run `git commit` or `git push` directly unless explicitly instructed.

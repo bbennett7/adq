@@ -4,8 +4,14 @@ import rehypeSanitize from 'rehype-sanitize';
 import type { PublishedQuestion } from '@/lib/schemas';
 
 const REHYPE_PLUGINS = [rehypeSanitize];
+
 const QUESTION_COMPONENTS: Components = {
-	p: ({ children }) => <h1>{children}</h1>,
+	p: ({ children }) => <p className="card-q">{children}</p>,
+	em: ({ children }) => <span className="gw">{children}</span>,
+};
+
+const ANSWER_COMPONENTS: Components = {
+	p: ({ children }) => <p className="card-a">{children}</p>,
 };
 
 export function QuestionCard({ data }: { data: PublishedQuestion }) {
@@ -18,29 +24,29 @@ export function QuestionCard({ data }: { data: PublishedQuestion }) {
 	});
 
 	return (
-		<section className="feature">
-			<div className="feature-meta">
-				<span>
-					<b>{published}</b> &nbsp;·&nbsp; no. {num}
-				</span>
+		<article className="card">
+			<div className="card-cap">
+				<span>{published}</span>
+				<span>no. {num}</span>
 			</div>
-			<div className="feature-body">
-				<div className="feature-q">
-					<span className="label">Question</span>
-					<ReactMarkdown
-						rehypePlugins={REHYPE_PLUGINS}
-						components={QUESTION_COMPONENTS}
-					>
-						{data.questionMd}
-					</ReactMarkdown>
-				</div>
-				<div className="feature-a">
-					<span className="label">Answer</span>
-					<ReactMarkdown rehypePlugins={REHYPE_PLUGINS}>
-						{data.answerMd}
-					</ReactMarkdown>
-				</div>
+			<div className="card-side card-q-side">
+				<span className="card-label">Question</span>
+				<ReactMarkdown
+					rehypePlugins={REHYPE_PLUGINS}
+					components={QUESTION_COMPONENTS}
+				>
+					{data.questionMd}
+				</ReactMarkdown>
 			</div>
-		</section>
+			<div className="card-side card-a-side">
+				<span className="card-label">Answer</span>
+				<ReactMarkdown
+					rehypePlugins={REHYPE_PLUGINS}
+					components={ANSWER_COMPONENTS}
+				>
+					{data.answerMd}
+				</ReactMarkdown>
+			</div>
+		</article>
 	);
 }
