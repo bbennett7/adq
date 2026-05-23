@@ -3,7 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"author": "Bryn Bennett <bryn.bennett@gmail.com>",
-	"license": "MIT",
+	"license": "UNLICENSED",
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build",
