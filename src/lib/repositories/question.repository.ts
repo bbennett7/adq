@@ -1,5 +1,5 @@
 import { sql } from 'drizzle-orm';
-
+import { cacheLife, cacheTag } from 'next/cache';
 import { db } from '@/lib/db';
 import { logger } from '@/lib/logger';
 import type { PublishedQuestion, PublishedQuestionsPage } from '@/lib/schemas';
@@ -58,6 +58,10 @@ function toPublishedQuestion(row: QuestionRow): PublishedQuestion {
 async function fetchQuestion(
 	number: number,
 ): Promise<PublishedQuestion | null> {
+	'use cache';
+	cacheTag(`question-${number}`);
+	cacheLife('days');
+
 	log.info({ number }, 'fetching question');
 	const row = await db.query.questions.findFirst({
 		columns: questionColumns,
@@ -83,6 +87,10 @@ async function fetchAdjacentQuestions(number: number): Promise<{
 	prev: PublishedQuestion | null;
 	next: PublishedQuestion | null;
 }> {
+	'use cache';
+	cacheTag(`question-${number}`);
+	cacheLife('days');
+
 	const [prev, next] = await Promise.all([
 		db.query.questions.findFirst({
 			columns: questionColumns,
@@ -130,6 +138,10 @@ async function fetchRecentQuestions(
 	limit: number,
 	cursor?: number,
 ): Promise<PublishedQuestionsPage> {
+	'use cache';
+	cacheTag('questions');
+	cacheLife({ stale: 60, revalidate: 60, expire: 3600 });
+
 	log.info({ limit, cursor }, 'fetching recent questions');
 	const rows = await db.query.questions.findMany({
 		columns: questionColumns,
@@ -151,14 +163,7 @@ async function fetchRecentQuestions(
 	});
 	log.info({ limit, cursor, count: rows.length }, 'fetched recent questions');
 
-	let mapped: PublishedQuestion[];
-	try {
-		mapped = rows.map(toPublishedQuestion);
-		log.info({ mapped: mapped.length }, 'mapped recent questions');
-	} catch (err) {
-		log.error({ err, firstRow: rows[0] }, 'failed to map question rows');
-		throw err;
-	}
+	const mapped = rows.map(toPublishedQuestion);
 	const nextCursor =
 		mapped.length === limit ? mapped[mapped.length - 1].number : null;
 
@@ -166,6 +171,10 @@ async function fetchRecentQuestions(
 }
 
 async function fetchLatestQuestionNumber(): Promise<number> {
+	'use cache';
+	cacheTag('questions');
+	cacheLife({ stale: 60, revalidate: 60, expire: 3600 });
+
 	log.info('fetching latest question number');
 	const row = await db.query.questions.findFirst({
 		columns: { number: true },
