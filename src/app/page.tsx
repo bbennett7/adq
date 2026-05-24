@@ -5,14 +5,23 @@ import { QuestionCard } from '@/components/QuestionCard';
 import { QuestionCardEmpty } from '@/components/QuestionCardEmpty';
 import { RecentQuestions } from '@/components/RecentQuestions';
 import { HOME_PREVIEW_SIZE } from '@/lib/config';
+import { logger } from '@/lib/logger';
 import { questionService } from '@/lib/services/question.service';
+
+const log = logger.child({ module: 'home-page' });
 
 async function HomeContent() {
 	await connection();
+	log.info('HomeContent: fetching questions');
 	const { questions } = await questionService.getRecentQuestions(
 		HOME_PREVIEW_SIZE + 1,
 	);
+	log.info({ count: questions.length }, 'HomeContent: received questions');
 	const [today, ...recent] = questions;
+	log.info(
+		{ hasToday: !!today, recentCount: recent.length },
+		'HomeContent: rendering',
+	);
 
 	return (
 		<>

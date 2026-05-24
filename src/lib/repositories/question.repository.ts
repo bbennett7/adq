@@ -151,7 +151,14 @@ async function fetchRecentQuestions(
 	});
 	log.info({ limit, cursor, count: rows.length }, 'fetched recent questions');
 
-	const mapped = rows.map(toPublishedQuestion);
+	let mapped: PublishedQuestion[];
+	try {
+		mapped = rows.map(toPublishedQuestion);
+		log.info({ mapped: mapped.length }, 'mapped recent questions');
+	} catch (err) {
+		log.error({ err, firstRow: rows[0] }, 'failed to map question rows');
+		throw err;
+	}
 	const nextCursor =
 		mapped.length === limit ? mapped[mapped.length - 1].number : null;
 
