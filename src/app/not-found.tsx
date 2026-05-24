@@ -10,16 +10,12 @@ export default function NotFound() {
 				</div>
 				<div className="card-side card-q-side">
 					<div className="card-label">The question</div>
-					<h1 className="card-q">
-						Where am I?
-					</h1>
+					<h1 className="card-q">Where am I?</h1>
 				</div>
 				<div className="card-side card-a-side">
 					<div className="card-label">The answer</div>
 					<div className="card-a">
-						<p>
-							You found a page that doesn&rsquo;t exist.
-						</p>
+						<p>You found a page that doesn&rsquo;t exist.</p>
 					</div>
 					<div className="not-found-actions">
 						<Link href="/" className="btn btn-primary">
