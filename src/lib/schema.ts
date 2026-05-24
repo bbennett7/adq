@@ -63,7 +63,6 @@ export const questionResources = pgTable(
 		resourceId: uuid('resource_id')
 			.notNull()
 			.references(() => resources.id, { onDelete: 'cascade' }),
-		sortOrder: integer('sort_order').notNull().default(0),
 	},
 	(table) => [primaryKey({ columns: [table.questionId, table.resourceId] })],
 );

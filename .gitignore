@@ -32,6 +32,9 @@ yarn-error.log*
 # Override global *.sql ignore so migration files are tracked
 !migrations/*.sql
 
+# Seed / fixture scripts
+scripts/seed.ts
+
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
