@@ -40,7 +40,7 @@ export default async function OGImage() {
 			<div
 				style={{
 					fontFamily: 'Gowun Batang, serif',
-					fontSize: '95px',
+					fontSize: '105px',
 					color: '#FFFFFF',
 					lineHeight: 1,
 					letterSpacing: '-1.5px',
