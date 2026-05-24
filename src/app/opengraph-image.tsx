@@ -40,7 +40,7 @@ export default async function OGImage() {
 			<div
 				style={{
 					fontFamily: 'Gowun Batang, serif',
-					fontSize: '76px',
+					fontSize: '95px',
 					color: '#FFFFFF',
 					lineHeight: 1,
 					letterSpacing: '-1.5px',
@@ -50,7 +50,7 @@ export default async function OGImage() {
 			</div>
 			<div
 				style={{
-					fontSize: '14px',
+					fontSize: '28px',
 					color: 'rgba(255,255,255,0.4)',
 					letterSpacing: '3px',
 					textTransform: 'uppercase',
