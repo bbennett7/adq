@@ -30,7 +30,7 @@ export default async function OGImage() {
 				display: 'flex',
 				width: '100%',
 				height: '100%',
-				background: 'rgb(32, 28, 24)',
+				background: 'rgb(253, 252, 250)',
 				flexDirection: 'column',
 				alignItems: 'center',
 				justifyContent: 'center',
@@ -41,7 +41,7 @@ export default async function OGImage() {
 				style={{
 					fontFamily: 'Gowun Batang, serif',
 					fontSize: '105px',
-					color: '#FFFFFF',
+					color: 'rgb(40, 32, 24)',
 					lineHeight: 1,
 					letterSpacing: '-1.5px',
 				}}
@@ -51,7 +51,7 @@ export default async function OGImage() {
 			<div
 				style={{
 					fontSize: '28px',
-					color: 'rgba(255,255,255,0.4)',
+					color: 'rgba(40,32,24,0.4)',
 					letterSpacing: '3px',
 					textTransform: 'uppercase',
 					fontFamily: 'sans-serif',
