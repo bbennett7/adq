@@ -6,7 +6,7 @@
 
 :root {
 	/* ── Primitives ── */
-	--ink: 44 33 23; /* warm near-black */
+	--ink: 40 32 24; /* near-black */
 	--paper: 253 252 250; /* off-white page surface */
 	--cream: 240 235 224; /* warm cream card surface */
 	--off-white: 249 247 244; /* text/labels on dark surfaces */
@@ -49,17 +49,17 @@
 @media (prefers-color-scheme: dark) {
 	:root:not([data-theme="light"]) {
 		--ink: 232 221 208; /* flips — a-text, label-on-cream, rule all follow */
-		--paper: 23 18 16; /* flips — color-page follows */
-		--color-q-bg: #332620;
-		--color-a-bg: #2b201a;
+		--paper: 20 18 16; /* flips — color-page follows */
+		--color-q-bg: #2a2220;
+		--color-a-bg: #231e1c;
 	}
 }
 
 :root[data-theme="dark"] {
 	--ink: 232 221 208;
-	--paper: 23 18 16;
-	--color-q-bg: #332620;
-	--color-a-bg: #2b201a;
+	--paper: 20 18 16;
+	--color-q-bg: #2a2220;
+	--color-a-bg: #231e1c;
 }
 
 /* ══════════════════════════════════════
@@ -403,6 +403,15 @@ a:hover {
 	margin-top: 6px;
 }
 
+.site-footer-tagline a {
+	color: var(--color-label);
+	text-decoration: none;
+}
+
+.site-footer-tagline a:hover {
+	color: var(--color-accent);
+}
+
 .site-footer-contact {
 	font-family: var(--font-mono);
 	font-size: var(--size-label);
@@ -586,6 +595,10 @@ a:hover {
 	letter-spacing: -0.015em;
 	margin: 0;
 	color: var(--color-a-text);
+}
+
+.featured-recent:hover h3 {
+	color: var(--color-accent);
 }
 
 ul.qlist {
