@@ -6,7 +6,7 @@
 
 :root {
 	/* ── Primitives ── */
-	--ink: 38 31 24; /* near-black */
+	--ink: 40 32 24; /* near-black */
 	--paper: 253 252 250; /* off-white page surface */
 	--cream: 240 235 224; /* warm cream card surface */
 	--off-white: 249 247 244; /* text/labels on dark surfaces */
