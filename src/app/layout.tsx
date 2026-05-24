@@ -90,9 +90,8 @@ export default function RootLayout({
 								One question · One answer · Every weekday
 							</div>
 							<div className="site-footer-tagline">
-								by{' '}
 								<a href="https://brynbennett.dev" target="_blank" rel="noopener noreferrer">
-									Bryn Bennett
+									BRYNBENNETT.DEV
 								</a>
 							</div>
 						</div>
