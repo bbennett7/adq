@@ -55,7 +55,6 @@ function toPublishedQuestion(row: QuestionRow): PublishedQuestion {
 async function fetchQuestion(
 	number: number,
 ): Promise<PublishedQuestion | null> {
-
 	const row = await db.query.questions.findFirst({
 		columns: questionColumns,
 		where: (q, { and, eq, isNotNull, isNull }) =>
