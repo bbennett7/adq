@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { connection } from 'next/server';
+import { Suspense } from 'react';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { questionRepository } from '@/lib/repositories/question.repository';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -22,6 +25,17 @@ export const metadata: Metadata = {
 };
 
 const themeScript = `(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;})();`;
+
+async function QuestionCount() {
+	await connection();
+	const count = await questionRepository.getLatestQuestionNumber();
+	return (
+		<>
+			<b>{count}</b> answered &nbsp;·&nbsp; <b className="counter-inf">∞</b>{' '}
+			remaining
+		</>
+	);
+}
 
 export default function RootLayout({
 	children,
@@ -48,9 +62,9 @@ export default function RootLayout({
 				<header className="site-header">
 					<div className="site-header-inner wrap">
 						<div className="site-header-counter">
-							{/* TODO: wire to live count query when DB is connected */}
-							<b>142</b> answered &nbsp;·&nbsp; <b className="counter-inf">∞</b>{' '}
-							remaining
+							<Suspense>
+								<QuestionCount />
+							</Suspense>
 						</div>
 						<Link href="/" className="wordmark wordmark--nav">
 							askdumbquestions.ai
@@ -75,7 +89,12 @@ export default function RootLayout({
 							<div className="site-footer-tagline">
 								One question · One answer · Every weekday
 							</div>
-							<div className="site-footer-tagline">by Bryn Bennett</div>
+							<div className="site-footer-tagline">
+								by{' '}
+								<a href="https://brynbennett.dev" target="_blank" rel="noopener noreferrer">
+									Bryn Bennett
+								</a>
+							</div>
 						</div>
 						<div className="site-footer-right">
 							<a
@@ -88,6 +107,8 @@ export default function RootLayout({
 								{/* biome-ignore lint/a11y/useAnchorContent: aria-label provides accessible label */}
 								<a
 									href="https://github.com/bbennett7/adq"
+									target="_blank"
+									rel="noopener noreferrer"
 									aria-label="GitHub"
 									className="site-footer-icon-link"
 								>
