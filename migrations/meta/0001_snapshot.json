@@ -1,6 +1,6 @@
 {
-	"id": "3c3fb7a3-175f-4d67-82d3-4d7f9ee5e9b7",
-	"prevId": "00000000-0000-0000-0000-000000000000",
+	"id": "0adbc57b-ea62-47aa-8d93-a18830fef74c",
+	"prevId": "3c3fb7a3-175f-4d67-82d3-4d7f9ee5e9b7",
 	"version": "7",
 	"dialect": "postgresql",
 	"tables": {
@@ -19,13 +19,6 @@
 					"type": "uuid",
 					"primaryKey": false,
 					"notNull": true
-				},
-				"sort_order": {
-					"name": "sort_order",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true,
-					"default": 0
 				}
 			},
 			"indexes": {},

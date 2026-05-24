@@ -27,6 +27,11 @@ type QuestionRow = {
 	}>;
 };
 
+function toIso(value: string | null): string | null {
+	if (!value) return null;
+	return new Date(value).toISOString();
+}
+
 function toPublishedQuestion(row: QuestionRow): PublishedQuestion {
 	return PublishedQuestionSchema.parse({
 		id: row.id,
@@ -34,10 +39,10 @@ function toPublishedQuestion(row: QuestionRow): PublishedQuestion {
 		questionMd: row.questionMd,
 		questionPt: row.questionPt,
 		answerMd: row.answerMd,
-		publishedAt: row.publishedAt,
-		createdAt: row.createdAt,
-		updatedAt: row.updatedAt,
-		deletedAt: row.deletedAt,
+		publishedAt: toIso(row.publishedAt),
+		createdAt: toIso(row.createdAt),
+		updatedAt: toIso(row.updatedAt),
+		deletedAt: toIso(row.deletedAt),
 		resources: row.questionResources.map(({ resource }) => ({
 			label: resource.label,
 			url: resource.url,
@@ -65,7 +70,7 @@ async function fetchQuestion(
 			),
 		with: {
 			questionResources: {
-				orderBy: (qr, { asc }) => asc(qr.sortOrder),
+				orderBy: (qr, { asc }) => asc(qr.questionId),
 				with: { resource: { columns: resourceColumns } },
 			},
 		},
@@ -94,7 +99,7 @@ async function fetchAdjacentQuestions(number: number): Promise<{
 			orderBy: (q, { desc }) => desc(q.number),
 			with: {
 				questionResources: {
-					orderBy: (qr, { asc }) => asc(qr.sortOrder),
+					orderBy: (qr, { asc }) => asc(qr.questionId),
 					with: { resource: { columns: resourceColumns } },
 				},
 			},
@@ -111,7 +116,7 @@ async function fetchAdjacentQuestions(number: number): Promise<{
 			orderBy: (q, { asc }) => asc(q.number),
 			with: {
 				questionResources: {
-					orderBy: (qr, { asc }) => asc(qr.sortOrder),
+					orderBy: (qr, { asc }) => asc(qr.questionId),
 					with: { resource: { columns: resourceColumns } },
 				},
 			},
@@ -145,7 +150,7 @@ async function fetchRecentQuestions(
 		limit,
 		with: {
 			questionResources: {
-				orderBy: (qr, { asc }) => asc(qr.sortOrder),
+				orderBy: (qr, { asc }) => asc(qr.questionId),
 				with: { resource: { columns: resourceColumns } },
 			},
 		},
@@ -156,6 +161,25 @@ async function fetchRecentQuestions(
 		mapped.length === limit ? mapped[mapped.length - 1].number : null;
 
 	return { questions: mapped, nextCursor };
+}
+
+async function fetchLatestQuestionNumber(): Promise<number> {
+	'use cache';
+	cacheTag('questions');
+	cacheLife({ stale: 60, revalidate: 60, expire: 3600 });
+
+	const row = await db.query.questions.findFirst({
+		columns: { number: true },
+		where: (q, { and, isNotNull, isNull }) =>
+			and(
+				isNotNull(q.publishedAt),
+				sql`${q.publishedAt} <= now()`,
+				isNull(q.deletedAt),
+			),
+		orderBy: (q, { desc }) => desc(q.number),
+	});
+
+	return row?.number ?? 0;
 }
 
 export class QuestionRepository {
@@ -175,6 +199,10 @@ export class QuestionRepository {
 		cursor?: number,
 	): Promise<PublishedQuestionsPage> {
 		return fetchRecentQuestions(limit, cursor);
+	}
+
+	async getLatestQuestionNumber(): Promise<number> {
+		return fetchLatestQuestionNumber();
 	}
 }
 
