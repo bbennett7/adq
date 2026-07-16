@@ -3,6 +3,7 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 import { Pool } from 'pg';
 import { logger } from '@/lib/logger';
 import * as schema from '@/lib/schema';
+import * as gcSchema from '@/lib/schema.gc';
 
 const log = logger.child({ module: 'db' });
 
@@ -25,5 +26,5 @@ attachDatabasePool(pool);
 
 export const db = drizzle({
 	client: pool,
-	schema,
+	schema: { ...schema, ...gcSchema },
 });
