@@ -772,6 +772,7 @@ ul.qlist a:hover {
 	font-weight: var(--weight-question);
 	font-size: 18px;
 	color: var(--color-a-text);
+	margin: 0 0 48px;
 }
 
 .sr-only {
