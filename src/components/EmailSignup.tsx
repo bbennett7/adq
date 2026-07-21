@@ -52,7 +52,7 @@ export function EmailSignup() {
 		<section className="signup" aria-labelledby="signup-heading">
 			{status === 'success' ? (
 				<p className="signup-confirmed">
-					You're in — look for us weekday mornings.
+					You're on the list — we'll let you know when the email launches.
 				</p>
 			) : (
 				<>
@@ -60,7 +60,8 @@ export function EmailSignup() {
 						Get each question in your inbox
 					</h2>
 					<p className="signup-sub">
-						One foundational AI question, every weekday morning.
+						One foundational AI question, every weekday morning. Email delivery
+						is coming soon — sign up to be first.
 					</p>
 					<form className="signup-form" onSubmit={handleSubmit} noValidate>
 						<label htmlFor="signup-email" className="sr-only">
