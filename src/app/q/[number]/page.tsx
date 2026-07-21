@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { connection } from 'next/server';
 import { Suspense } from 'react';
 import { QuestionCard } from '@/components/QuestionCard';
+import { QuestionPageSkeleton } from '@/components/QuestionPageSkeleton';
 import { ResourceLinks } from '@/components/ResourceLinks';
 import { routes } from '@/lib/routes';
 import { questionService } from '@/lib/services/question.service';
@@ -81,7 +82,7 @@ export default function QuestionPage({ params }: Params) {
 					← All questions
 				</Link>
 			</div>
-			<Suspense>
+			<Suspense fallback={<QuestionPageSkeleton />}>
 				<QuestionContent params={params} />
 			</Suspense>
 		</div>

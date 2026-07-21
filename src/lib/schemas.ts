@@ -45,6 +45,17 @@ export const PublishedQuestionsPageSchema = z.object({
 	nextCursor: z.number().int().positive().nullable(),
 });
 
+export const PublishedFieldNoteSchema = z.object({
+	id: z.uuid(),
+	title: z.string().min(1),
+	slug: z.string().min(1),
+	bodyMd: z.string().min(1),
+	bodyPt: z.string().nullable(),
+	topic: z.string().nullable(),
+	featured: z.boolean(),
+	publishedAt: z.iso.datetime(),
+});
+
 export const ApiErrorSchema = z.object({
 	error: z.string(),
 });
@@ -53,7 +64,12 @@ export const RevalidateBodySchema = z.object({
 	questionNumbers: z.array(z.number().int().positive()).default([]),
 });
 
+export const SubscribeBodySchema = z.object({
+	email: z.string().email(),
+});
+
 export type ResourceLink = z.infer<typeof ResourceLinkSchema>;
+export type PublishedFieldNote = z.infer<typeof PublishedFieldNoteSchema>;
 export type Question = z.infer<typeof QuestionSchema>;
 export type PublishedQuestion = z.infer<typeof PublishedQuestionSchema>;
 export type PublishedQuestionsPage = z.infer<

@@ -6,7 +6,7 @@
 	"author": "Bryn Bennett <bryn.bennett@gmail.com>",
 	"license": "UNLICENSED",
 	"scripts": {
-		"dev": "next dev",
+		"dev": "next dev --port 3001",
 		"build": "next build",
 		"start": "next start",
 		"lint": "biome check .",
@@ -21,6 +21,7 @@
 		"next": "16.2.4",
 		"pg": "^8.21.0",
 		"pino": "^10.3.1",
+		"posthog-js": "^1.376.0",
 		"react": "19.2.4",
 		"react-dom": "19.2.4",
 		"react-markdown": "^10.1.0",
