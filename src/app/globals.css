@@ -7,14 +7,16 @@
 :root {
 	/* ── Primitives ── */
 	--ink: 40 32 24; /* near-black */
+	--ink-surface: 20 18 16; /* deep ink — q panel, footer, buttons */
 	--paper: 253 252 250; /* off-white page surface */
 	--cream: 240 235 224; /* warm cream card surface */
 	--off-white: 249 247 244; /* text/labels on dark surfaces */
+	--cream-text: 232 221 208; /* warm cream — OG cards + footer text */
 	--accent-ch: 204 191 168; /* tan accent */
 
 	/* ── Semantic tokens ── */
 	--color-page: rgb(var(--paper));
-	--color-q-bg: rgb(var(--ink));
+	--color-q-bg: rgb(var(--ink-surface));
 	--color-q-text: rgb(var(--off-white));
 	--color-a-bg: rgb(var(--cream));
 	--color-a-text: rgb(var(--ink));
@@ -50,16 +52,16 @@
 	:root:not([data-theme="light"]) {
 		--ink: 232 221 208; /* flips — a-text, label-on-cream, rule all follow */
 		--paper: 20 18 16; /* flips — color-page follows */
-		--color-q-bg: #2a2220;
-		--color-a-bg: #231e1c;
+		--color-q-bg: #2b2723;
+		--color-a-bg: #221f1c;
 	}
 }
 
 :root[data-theme="dark"] {
 	--ink: 232 221 208;
 	--paper: 20 18 16;
-	--color-q-bg: #2a2220;
-	--color-a-bg: #231e1c;
+	--color-q-bg: #2b2723;
+	--color-a-bg: #221f1c;
 }
 
 /* ══════════════════════════════════════
@@ -369,16 +371,46 @@ a:hover {
    ══════════════════════════════════════ */
 
 .site-footer {
+	/* footer text runs cream, matching the OG cards */
+	--color-q-text: rgb(var(--cream-text));
+	--color-label: rgb(var(--cream-text) / 0.6);
 	background: var(--color-q-bg);
 	color: var(--color-q-text);
 	padding: 40px 0;
 	margin-top: auto;
 }
 
-.site-footer-inner {
+.theme-toggle {
 	display: flex;
-	justify-content: space-between;
-	align-items: flex-end;
+	align-items: center;
+	background: none;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	color: var(--color-label);
+}
+
+.theme-toggle:hover {
+	color: var(--color-q-text);
+}
+
+.site-footer-inner {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	grid-template-areas:
+		"left right"
+		"toggle right";
+	align-items: end;
+	row-gap: 14px;
+}
+
+.site-footer-left {
+	grid-area: left;
+}
+
+.site-footer-inner .theme-toggle {
+	grid-area: toggle;
+	justify-self: start;
 }
 
 .site-footer-wordmark {
@@ -431,6 +463,7 @@ a:hover {
 }
 
 .site-footer-right {
+	grid-area: right;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
@@ -454,20 +487,6 @@ a:hover {
 .site-footer-icon-link:hover {
 	color: var(--color-q-text);
 	text-decoration: none;
-}
-
-.site-footer-theme-toggle {
-	display: flex;
-	align-items: center;
-	background: none;
-	border: none;
-	padding: 0;
-	cursor: pointer;
-	color: var(--color-label);
-}
-
-.site-footer-theme-toggle:hover {
-	color: var(--color-q-text);
 }
 
 /* ══════════════════════════════════════
@@ -1081,10 +1100,18 @@ ul.resource-links-list li {
 	}
 
 	.site-footer-inner {
-		flex-direction: column;
-		align-items: center;
-		gap: 32px;
+		grid-template-columns: 1fr;
+		grid-template-areas:
+			"left"
+			"right"
+			"toggle";
+		justify-items: center;
+		row-gap: 32px;
 		text-align: center;
+	}
+
+	.site-footer-inner .theme-toggle {
+		justify-self: center;
 	}
 
 	.site-footer-right {

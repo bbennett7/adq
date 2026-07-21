@@ -8,16 +8,26 @@ export const alt =
 	'askdumbquestions.ai — One question. One answer. Every weekday.';
 
 export default async function OGImage() {
-	const fontData = await readFile(
-		join(process.cwd(), 'public/fonts/GowunBatang-Regular.ttf'),
-	);
+	const [wordmarkData, monoData] = await Promise.all([
+		readFile(join(process.cwd(), 'public/fonts/GowunBatang-Regular.ttf')),
+		readFile(join(process.cwd(), 'public/fonts/IBMPlexMono-Regular-latin.ttf')),
+	]);
 
 	const fonts = [
 		{
 			name: 'Gowun Batang',
-			data: fontData.buffer.slice(
-				fontData.byteOffset,
-				fontData.byteOffset + fontData.byteLength,
+			data: wordmarkData.buffer.slice(
+				wordmarkData.byteOffset,
+				wordmarkData.byteOffset + wordmarkData.byteLength,
+			) as ArrayBuffer,
+			style: 'normal' as const,
+			weight: 400 as const,
+		},
+		{
+			name: 'IBM Plex Mono',
+			data: monoData.buffer.slice(
+				monoData.byteOffset,
+				monoData.byteOffset + monoData.byteLength,
 			) as ArrayBuffer,
 			style: 'normal' as const,
 			weight: 400 as const,
@@ -30,7 +40,7 @@ export default async function OGImage() {
 				display: 'flex',
 				width: '100%',
 				height: '100%',
-				background: 'rgb(253, 252, 250)',
+				background: 'rgb(20, 18, 16)',
 				flexDirection: 'column',
 				alignItems: 'center',
 				justifyContent: 'center',
@@ -41,7 +51,7 @@ export default async function OGImage() {
 				style={{
 					fontFamily: 'Gowun Batang, serif',
 					fontSize: '105px',
-					color: 'rgb(40, 32, 24)',
+					color: 'rgb(232, 221, 208)',
 					lineHeight: 1,
 					letterSpacing: '-1.5px',
 				}}
@@ -50,11 +60,11 @@ export default async function OGImage() {
 			</div>
 			<div
 				style={{
-					fontSize: '28px',
-					color: 'rgb(40, 32, 24)',
+					fontFamily: 'IBM Plex Mono',
+					fontSize: '26px',
+					color: '#ccbfa8',
 					letterSpacing: '3px',
 					textTransform: 'uppercase',
-					fontFamily: 'sans-serif',
 				}}
 			>
 				One question · One answer · Every weekday
