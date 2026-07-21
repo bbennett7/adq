@@ -7,6 +7,7 @@
 :root {
 	/* ── Primitives ── */
 	--ink: 40 32 24; /* near-black */
+	--ink-surface: 20 18 16; /* deep ink — q panel, footer, buttons */
 	--paper: 253 252 250; /* off-white page surface */
 	--cream: 240 235 224; /* warm cream card surface */
 	--off-white: 249 247 244; /* text/labels on dark surfaces */
@@ -14,7 +15,7 @@
 
 	/* ── Semantic tokens ── */
 	--color-page: rgb(var(--paper));
-	--color-q-bg: rgb(var(--ink));
+	--color-q-bg: rgb(var(--ink-surface));
 	--color-q-text: rgb(var(--off-white));
 	--color-a-bg: rgb(var(--cream));
 	--color-a-text: rgb(var(--ink));
@@ -50,16 +51,16 @@
 	:root:not([data-theme="light"]) {
 		--ink: 232 221 208; /* flips — a-text, label-on-cream, rule all follow */
 		--paper: 20 18 16; /* flips — color-page follows */
-		--color-q-bg: #2a2220;
-		--color-a-bg: #231e1c;
+		--color-q-bg: #2b2723;
+		--color-a-bg: #221f1c;
 	}
 }
 
 :root[data-theme="dark"] {
 	--ink: 232 221 208;
 	--paper: 20 18 16;
-	--color-q-bg: #2a2220;
-	--color-a-bg: #231e1c;
+	--color-q-bg: #2b2723;
+	--color-a-bg: #221f1c;
 }
 
 /* ══════════════════════════════════════
