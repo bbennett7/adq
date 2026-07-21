@@ -80,7 +80,6 @@ export default function RootLayout({
 								<Link href="/notes">Field Notes</Link>
 								<span className="site-header-nav-disabled">Resources</span>
 								<Link href="/about">About</Link>
-								<ThemeToggle />
 							</nav>
 						</div>
 					</header>
@@ -89,7 +88,7 @@ export default function RootLayout({
 
 					<footer className="site-footer">
 						<div className="wrap site-footer-inner">
-							<div>
+							<div className="site-footer-left">
 								<Link href="/" className="site-footer-wordmark">
 									askdumbquestions.ai
 								</Link>
@@ -152,6 +151,7 @@ export default function RootLayout({
 									</a>
 								</div>
 							</div>
+							<ThemeToggle />
 						</div>
 					</footer>
 				</PostHogProvider>
