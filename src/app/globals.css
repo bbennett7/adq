@@ -457,18 +457,18 @@ a:hover {
 	text-decoration: none;
 }
 
-.site-footer-theme-toggle {
+.theme-toggle {
 	display: flex;
 	align-items: center;
 	background: none;
 	border: none;
 	padding: 0;
 	cursor: pointer;
-	color: var(--color-label);
+	color: var(--color-label-on-cream);
 }
 
-.site-footer-theme-toggle:hover {
-	color: var(--color-q-text);
+.theme-toggle:hover {
+	color: var(--color-a-text);
 }
 
 /* ══════════════════════════════════════
