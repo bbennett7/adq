@@ -32,7 +32,7 @@ export function ThemeToggle() {
 		return (
 			<button
 				type="button"
-				className="site-footer-theme-toggle"
+				className="theme-toggle"
 				tabIndex={-1}
 				style={{ visibility: 'hidden' }}
 			/>
@@ -43,7 +43,7 @@ export function ThemeToggle() {
 		<button
 			type="button"
 			onClick={toggle}
-			className="site-footer-theme-toggle"
+			className="theme-toggle"
 			aria-label={
 				theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
 			}

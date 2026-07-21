@@ -4,6 +4,7 @@ import { connection } from 'next/server';
 import { Suspense } from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeSanitize from 'rehype-sanitize';
+import { excerpt } from '@/lib/excerpt';
 import { routes } from '@/lib/routes';
 import { fieldNoteService } from '@/lib/services/field-note.service';
 
@@ -17,11 +18,7 @@ export async function generateMetadata({ params }: Params) {
 
 	const note = await fieldNoteService.getNote(slug);
 	if (!note) return {};
-	const description = note.bodyPt
-		? note.bodyPt.length > 160
-			? `${note.bodyPt.slice(0, 160).trimEnd()}…`
-			: note.bodyPt
-		: undefined;
+	const description = note.bodyPt ? excerpt(note.bodyPt) : undefined;
 	return { title: note.title, description };
 }
 
