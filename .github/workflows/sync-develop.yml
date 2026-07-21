@@ -18,5 +18,24 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout develop
-          git merge main --no-edit
+
+          # Clean merge (covers hotfixes on main) — push and done.
+          if git merge main --no-edit; then
+            git push origin develop
+            exit 0
+          fi
+          git merge --abort
+
+          # Squash-merging develop → main leaves a stale merge base, so this
+          # merge conflicts on files both sides "added" even when the content
+          # is identical. develop is the source of truth in this flow:
+          # resolve conflicting hunks in develop's favor, but only push if
+          # that yields a content-neutral, history-only merge. Anything else
+          # means main has real changes develop lacks — needs human eyes.
+          BEFORE=$(git rev-parse 'develop^{tree}')
+          git merge main -X ours --no-edit
+          if [ "$(git rev-parse 'HEAD^{tree}')" != "$BEFORE" ]; then
+            echo "::error::Sync merge would change develop's content — main has changes develop lacks. Merge main into develop manually."
+            exit 1
+          fi
           git push origin develop
