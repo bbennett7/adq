@@ -247,18 +247,17 @@ a:hover {
    INLINE ITALIC ACCENT (the signature move)
    ══════════════════════════════════════ */
 
+/* Slant comes from synthetic oblique, not a transform: transforms need
+   display: inline-block, which makes the whole phrase one unbreakable box —
+   it drops to its own line and orphans the punctuation that follows it. */
 .gw {
 	font-family: var(--font-wordmark);
 	font-weight: 400;
-	font-style: normal;
-	display: inline-block;
-	transform-origin: left bottom;
-	transform: translateY(0.07em) skewX(-15deg);
+	font-style: oblique 15deg;
 	-webkit-text-stroke: 0.6px currentColor;
 	font-size: 1.08em;
 	letter-spacing: -0.005em;
-	margin-left: -0.08em;
-	margin-right: 0.04em;
+	margin-right: 0.06em;
 	color: var(--color-accent);
 	-webkit-text-stroke-color: var(--color-accent);
 }
